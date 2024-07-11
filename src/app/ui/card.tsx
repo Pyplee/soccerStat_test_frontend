@@ -11,11 +11,11 @@ import {
 } from "@chakra-ui/react";
 
 export default function Card({
-  nameLiga,
+  name,
   country,
   urlEmblem,
 }: {
-  nameLiga: string;
+  name: string;
   country: string;
   urlEmblem: string;
 }): JSX.Element {
@@ -25,6 +25,7 @@ export default function Card({
         role={"group"}
         p={6}
         maxW={"330px"}
+        minW={"130px"}
         w={"full"}
         bg={useColorModeValue("white", "gray.800")}
         boxShadow={"2xl"}
@@ -64,8 +65,23 @@ export default function Card({
           />
         </Box>
         <Stack pt={5} align={"center"}>
-          <Heading fontSize={"2xl"} fontFamily={"body"} fontWeight={500}>
-            {nameLiga}
+          <Heading
+            fontSize={"2xl"}
+            fontFamily={"body"}
+            fontWeight={500}
+            minHeight={"3.0em"}
+            lineHeight={"1.2em"}
+            textAlign={"center"}
+            style={{
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              wordBreak: "break-word",
+            }}
+          >
+            {name}
           </Heading>
           <Text color={"gray.500"} fontSize={"sm"} textTransform={"uppercase"}>
             {country}
