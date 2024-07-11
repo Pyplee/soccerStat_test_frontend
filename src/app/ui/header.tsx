@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Box,
@@ -66,13 +67,11 @@ export default function WithSubnavigation() {
           >
             Логотип
           </Text>
-
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
             <DesktopNav />
           </Flex>
         </Flex>
       </Flex>
-
       <Collapse in={isOpen} animateOpacity>
         <MobileNav />
       </Collapse>
@@ -93,34 +92,33 @@ const DesktopNav = () => {
         <Box key={navItem.label}>
           <Popover trigger={"hover"} placement={"bottom-start"}>
             <PopoverTrigger>
-              <Box
-                as="a"
-                p={2}
-                href={navItem.href ?? "#"}
-                fontSize={"sm"}
-                fontWeight={500}
-                color={linkColor}
-                _hover={{
-                  textDecoration: "none",
-                  color: linkHoverColor,
-                }}
-              >
-                <Badge
-                  colorScheme={
-                    navItem.id === formatedPathname
-                      ? colorsBadge.active
-                      : colorsBadge.inActive
-                  }
-                  ml="1"
-                  p="1"
-                  pr="3"
-                  pl="3"
-                  textAlign="center"
-                  rounded="xl"
+              <Link href={navItem.href ?? "#"} passHref>
+                <Box
+                  fontSize={"sm"}
+                  fontWeight={500}
+                  color={linkColor}
+                  _hover={{
+                    textDecoration: "none",
+                    color: linkHoverColor,
+                  }}
                 >
-                  {navItem.label}
-                </Badge>
-              </Box>
+                  <Badge
+                    colorScheme={
+                      navItem.id === formatedPathname
+                        ? colorsBadge.active
+                        : colorsBadge.inActive
+                    }
+                    ml="1"
+                    p="1"
+                    pr="3"
+                    pl="3"
+                    textAlign="center"
+                    rounded="xl"
+                  >
+                    {navItem.label}
+                  </Badge>
+                </Box>
+              </Link>
             </PopoverTrigger>
 
             {navItem.children && (
@@ -205,46 +203,46 @@ const MobileNavItem = ({ label, children, href, id }: NavItem) => {
 
   return (
     <Stack spacing={4} onClick={children && onToggle}>
-      <Box
-        py={2}
-        as="a"
-        href={href ?? "#"}
-        justifyContent="space-between"
-        alignItems="center"
-        _hover={{
-          textDecoration: "none",
-        }}
-      >
-        <Text
-          fontWeight={600}
-          color={useColorModeValue("gray.600", "gray.200")}
+      <Link href={href ?? "#"} passHref>
+        <Box
+          py={2}
+          justifyContent="space-between"
+          alignItems="center"
+          _hover={{
+            textDecoration: "none",
+          }}
         >
-          <Badge
-            colorScheme={
-              id === formatedPathname
-                ? colorsBadge.active
-                : colorsBadge.inActive
-            }
-            ml="1"
-            p="1"
-            pr="2"
-            pl="2"
-            textAlign="center"
-            rounded="xl"
+          <Text
+            fontWeight={600}
+            color={useColorModeValue("gray.600", "gray.200")}
           >
-            {label}
-          </Badge>
-        </Text>
-        {children && (
-          <Icon
-            as={ChevronDownIcon}
-            transition={"all .25s ease-in-out"}
-            transform={isOpen ? "rotate(180deg)" : ""}
-            w={6}
-            h={6}
-          />
-        )}
-      </Box>
+            <Badge
+              colorScheme={
+                id === formatedPathname
+                  ? colorsBadge.active
+                  : colorsBadge.inActive
+              }
+              ml="1"
+              p="1"
+              pr="2"
+              pl="2"
+              textAlign="center"
+              rounded="xl"
+            >
+              {label}
+            </Badge>
+          </Text>
+          {children && (
+            <Icon
+              as={ChevronDownIcon}
+              transition={"all .25s ease-in-out"}
+              transform={isOpen ? "rotate(180deg)" : ""}
+              w={6}
+              h={6}
+            />
+          )}
+        </Box>
+      </Link>
 
       <Collapse in={isOpen} animateOpacity style={{ marginTop: "0!important" }}>
         <Stack
@@ -278,12 +276,12 @@ interface NavItem {
 const NAV_ITEMS: Array<NavItem> = [
   {
     label: "Лиги",
-    href: "#",
+    href: "/competitions",
     id: "competitions",
   },
   {
     label: "Команды",
-    href: "#",
+    href: "/commands",
     id: "commands",
   },
 ];
