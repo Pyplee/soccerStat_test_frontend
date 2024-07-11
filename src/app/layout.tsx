@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
-
-// const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "SoccerStat",
@@ -16,8 +13,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ru" suppressHydrationWarning>
-      <body className="bg-[#f5f7fa]">
+    <html lang="ru" suppressHydrationWarning className="min-h-full">
+      <body className="bg-[#f5f7fa] min-h-full">
         <Providers>{children}</Providers>
       </body>
     </html>
