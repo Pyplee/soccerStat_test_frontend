@@ -56,7 +56,7 @@ export default function MainComponent() {
     if (!isError) {
       fetchCompetitions();
     }
-  }, [teams]);
+  }, []);
 
   function filterItems(array: Team[], value: string): Team[] {
     if (value === "") {

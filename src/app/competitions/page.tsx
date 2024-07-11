@@ -60,7 +60,7 @@ export default function MainComponent() {
     };
 
     fetchCompetitions();
-  }, [competitions]);
+  }, []);
 
   function filterItems(array: Competition[], value: string): Competition[] {
     if (value === "") {
