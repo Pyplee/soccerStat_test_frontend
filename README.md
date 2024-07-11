@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Установка
+Чтобы настроить проект локально, выполните следующие шаги: \
 
-## Getting Started
+Предисловие: не забудьте в корень проекта поместить файл '.env.local', в котором будет api token в формате: NEXT_PUBLIC_API_TOKEN=your_token. Получить его можно, создав аккаунт на [сервисе](https://www.football-data.org/client/register).
 
-First, run the development server:
+1. Клонируйте репозиторий:
+    ```
+    git clone [url]
+    ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. Перейдите в каталог проекта:
+    ```
+    cd soccerstat_test_frontend
+    ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Установите зависимости:
+    ```
+    make install
+    ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4. Выполните сборку приложения (можно пропустить при запуске в dev режиме):
+    ```
+    make build
+    ```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+5. Запустите приложение локально ('make dev' для запуска в dev режиме):
+    ```
+    make run
+    ```
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+6. Откройте браузер и перейдите по адресу:
+    ```
+    http://localhost:3000
+    ```

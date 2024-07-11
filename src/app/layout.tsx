@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-import { ChakraProvider } from "@chakra-ui/react";
-
-const inter = Inter({ subsets: ["latin"] });
+import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: "SoccerStat",
@@ -12,14 +9,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <ChakraProvider>
-      <html lang="en">
-        <body className={inter.className}>{children}</body>
-      </html>
-    </ChakraProvider>
+    <html lang="ru" suppressHydrationWarning className="min-h-full">
+      <body className="bg-[#f5f7fa] min-h-full">
+        <Providers>{children}</Providers>
+      </body>
+    </html>
   );
 }
