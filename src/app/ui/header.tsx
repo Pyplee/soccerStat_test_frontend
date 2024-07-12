@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import {
   Box,
   Flex,
@@ -29,9 +28,12 @@ const colorsBadge = {
   inActive: "white",
 };
 
-export default function WithSubnavigation() {
+export default function WithSubnavigation({
+  activeElement,
+}: {
+  activeElement: string;
+}) {
   const { isOpen, onToggle } = useDisclosure();
-
   return (
     <Box pb="1%">
       <Flex
@@ -68,23 +70,21 @@ export default function WithSubnavigation() {
             Логотип
           </Text>
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
-            <DesktopNav />
+            <DesktopNav activeElement={activeElement} />
           </Flex>
         </Flex>
       </Flex>
       <Collapse in={isOpen} animateOpacity>
-        <MobileNav />
+        <MobileNav activeElement={activeElement} />
       </Collapse>
     </Box>
   );
 }
 
-const DesktopNav = () => {
+const DesktopNav = ({ activeElement }: { activeElement: string }) => {
   const linkColor = useColorModeValue("gray.600", "gray.200");
   const linkHoverColor = useColorModeValue("gray.800", "white");
   const popoverContentBgColor = useColorModeValue("white", "gray.800");
-  const pathname = usePathname();
-  const formatedPathname = pathname.slice(1);
 
   return (
     <Stack direction={"row"} spacing={4}>
@@ -104,7 +104,7 @@ const DesktopNav = () => {
                 >
                   <Badge
                     colorScheme={
-                      navItem.id === formatedPathname
+                      navItem.id === activeElement
                         ? colorsBadge.active
                         : colorsBadge.inActive
                     }
@@ -182,7 +182,7 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
   );
 };
 
-const MobileNav = () => {
+const MobileNav = ({ activeElement }: { activeElement: string }) => {
   return (
     <Stack
       bg={useColorModeValue("white", "gray.800")}
@@ -190,16 +190,24 @@ const MobileNav = () => {
       display={{ md: "none" }}
     >
       {NAV_ITEMS.map((navItem) => (
-        <MobileNavItem key={navItem.label} {...navItem} />
+        <MobileNavItem
+          key={navItem.label}
+          {...navItem}
+          activeElement={activeElement}
+        />
       ))}
     </Stack>
   );
 };
 
-const MobileNavItem = ({ label, children, href, id }: NavItem) => {
+const MobileNavItem = ({
+  label,
+  children,
+  href,
+  id,
+  activeElement,
+}: NavItem) => {
   const { isOpen, onToggle } = useDisclosure();
-  const pathname = usePathname();
-  const formatedPathname = pathname.slice(1);
 
   return (
     <Stack spacing={4} onClick={children && onToggle}>
@@ -218,9 +226,7 @@ const MobileNavItem = ({ label, children, href, id }: NavItem) => {
           >
             <Badge
               colorScheme={
-                id === formatedPathname
-                  ? colorsBadge.active
-                  : colorsBadge.inActive
+                id === activeElement ? colorsBadge.active : colorsBadge.inActive
               }
               ml="1"
               p="1"
@@ -271,6 +277,7 @@ interface NavItem {
   children?: Array<NavItem>;
   href?: string;
   id: string;
+  activeElement?: string;
 }
 
 const NAV_ITEMS: Array<NavItem> = [
