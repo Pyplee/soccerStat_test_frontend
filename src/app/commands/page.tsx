@@ -18,10 +18,10 @@ interface ErrorData {
 interface Team {
   id: number;
   name: string;
-  crestUrl: string | null;
+  crest: string | null;
 }
 
-export default function MainComponent() {
+export default function CommandsComponent() {
   const [isLoading, setIsLoading] = React.useState(true);
   const [isError, setError] = React.useState<null | ErrorData>(null);
 
@@ -104,9 +104,11 @@ export default function MainComponent() {
         {itemsOnPageArr.map((item: Team) => (
           <Card
             key={item.id}
+            pageBaseUrl={"commands"}
+            id={item.id}
             name={item.name}
             country={""}
-            urlEmblem={item.crestUrl ?? ""}
+            urlEmblem={item.crest ?? ""}
           />
         ))}
       </Grid>

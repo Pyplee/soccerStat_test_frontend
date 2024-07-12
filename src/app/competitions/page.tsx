@@ -23,11 +23,11 @@ interface Area {
 interface Competition {
   id: number;
   name: string;
-  emblemUrl: string | null;
+  emblem: string | null;
   area: Area;
 }
 
-export default function MainComponent() {
+export default function CompetitionsComponent() {
   const [isLoading, setIsLoading] = React.useState(true);
   const [isError, setError] = React.useState<null | ErrorData>(null);
 
@@ -107,10 +107,12 @@ export default function MainComponent() {
       <Grid templateColumns="repeat(auto-fill, minmax(300px, 1fr))" gap={6}>
         {itemsOnPageArr.map((item: Competition) => (
           <Card
+            id={item.id}
+            pageBaseUrl={"competitions"}
             key={item.id}
             name={item.name}
             country={item.area.name ?? ""}
-            urlEmblem={item.emblemUrl ?? ""}
+            urlEmblem={item.emblem ?? ""}
           />
         ))}
       </Grid>
