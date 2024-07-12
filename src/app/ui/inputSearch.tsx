@@ -15,7 +15,6 @@ type InputSearchProps = {
 };
 
 export default function InputSearch({ searchChange }: InputSearchProps) {
-  // Состояние для хранения значения ввода
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
