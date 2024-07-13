@@ -13,7 +13,7 @@ const routes = {
   competitionIdMatches: (id) =>
     `http://api.football-data.org/v4/competitions/${id}/matches`,
   competitionIdDate: (id, dateFrom, dateTo) =>
-    `http://api.football-data.org/v4/competitions/${id}/matches?dateFrom=${dateFrom}dateTo=${dateTo}`, // yyyy-mm-dd
+    `http://api.football-data.org/v4/competitions/${id}/matches?dateFrom=${dateFrom}&dateTo=${dateTo}`,
   commands: () => "https://api.football-data.org/v4/teams",
   commandIdMatches: (id) => `http://api.football-data.org/v4/teams/${id}`,
   commandIdDate: (id, dateFrom, dateTo) =>
