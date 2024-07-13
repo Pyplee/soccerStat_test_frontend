@@ -30,7 +30,7 @@ export default function InputSearch({ searchChange }: InputSearchProps) {
 
   return (
     <Stack spacing={4}>
-      <InputGroup size="md" w="20%">
+      <InputGroup size="md" w="350px" className="adaptive-input">
         <Input
           placeholder="поиск"
           variant="outline"
