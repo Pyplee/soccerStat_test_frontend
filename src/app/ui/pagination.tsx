@@ -1,5 +1,11 @@
 import React from "react";
-import { Box, Button, HStack, IconButton } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  HStack,
+  IconButton,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
 interface PaginationProps {
@@ -13,6 +19,8 @@ const Pagination: React.FC<PaginationProps> = ({
   totalPages,
   onPageChange,
 }) => {
+  const [isLessThan660] = useMediaQuery("(max-width: 660px)");
+
   const getPaginationItems = () => {
     let items = [];
 
@@ -91,21 +99,45 @@ const Pagination: React.FC<PaginationProps> = ({
     return items;
   };
 
-  const paginationItems = getPaginationItems();
+  const getCompactPaginationItems = () => {
+    let items = [];
+    let startPage = Math.max(1, currentPage - 1);
+    let endPage = Math.min(totalPages, currentPage + 1);
+
+    for (let number = startPage; number <= endPage; number++) {
+      items.push(
+        <Button
+          key={number}
+          onClick={() => onPageChange(number)}
+          isActive={number === currentPage}
+        >
+          {number}
+        </Button>,
+      );
+    }
+
+    return items;
+  };
+
+  const paginationItems = isLessThan660
+    ? getCompactPaginationItems()
+    : getPaginationItems();
+
   if (totalPages <= 1) {
     return null;
   }
+
   return (
     <HStack spacing={2}>
       <IconButton
-        aria-label="Previous Page"
+        aria-label="Предыдушая страница"
         icon={<ChevronLeftIcon />}
         onClick={() => onPageChange(currentPage - 1)}
         isDisabled={currentPage === 1}
       />
       {paginationItems}
       <IconButton
-        aria-label="Next Page"
+        aria-label="Следующая страница"
         icon={<ChevronRightIcon />}
         onClick={() => onPageChange(currentPage + 1)}
         isDisabled={currentPage === totalPages}
