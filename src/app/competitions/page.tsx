@@ -8,7 +8,7 @@ import CustomSpinner from "../ui/CustomSpinner";
 import ErrorBlock from "../ui/ErrorBlock";
 import Pagination from "../ui/Pagination";
 import { getTotalPages, paginate } from "../pagination";
-import { api, routes } from "../route";
+import { api, routes } from "../apiRoutes";
 
 interface ErrorData {
   code: string;
