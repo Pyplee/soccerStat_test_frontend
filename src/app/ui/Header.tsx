@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import {
   Box,
   Flex,
@@ -24,17 +25,19 @@ import {
   ChevronRightIcon,
 } from "@chakra-ui/icons";
 
-const colorsBadge = {
-  active: "green",
-  inActive: "white",
-};
+function getColorActivePage(currentPage: string, activePage: string) {
+  const colorsBadge = {
+    active: "green",
+    inActive: "white",
+  };
 
-export default function WithSubnavigation({
-  activeElement,
-}: {
-  activeElement: string;
-}) {
+  return currentPage === activePage ? colorsBadge.active : colorsBadge.inActive;
+}
+
+export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
+  const pathname = usePathname();
+  const currentPageNavigation = pathname.split("/")[1] ?? "";
   return (
     <Box pb="1%">
       <Flex
@@ -73,21 +76,26 @@ export default function WithSubnavigation({
               width={100}
               height={36}
               alt="Picture of the author"
+              priority={false}
             />
           </Text>
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
-            <DesktopNav activeElement={activeElement} />
+            <DesktopNav currentPageNavigation={currentPageNavigation} />
           </Flex>
         </Flex>
       </Flex>
       <Collapse in={isOpen} animateOpacity>
-        <MobileNav activeElement={activeElement} />
+        <MobileNav currentPageNavigation={currentPageNavigation} />
       </Collapse>
     </Box>
   );
 }
 
-const DesktopNav = ({ activeElement }: { activeElement: string }) => {
+const DesktopNav = ({
+  currentPageNavigation = "",
+}: {
+  currentPageNavigation: string;
+}) => {
   const linkColor = useColorModeValue("gray.600", "gray.200");
   const linkHoverColor = useColorModeValue("gray.800", "white");
   const popoverContentBgColor = useColorModeValue("white", "gray.800");
@@ -109,11 +117,10 @@ const DesktopNav = ({ activeElement }: { activeElement: string }) => {
                   }}
                 >
                   <Badge
-                    colorScheme={
-                      navItem.id === activeElement
-                        ? colorsBadge.active
-                        : colorsBadge.inActive
-                    }
+                    colorScheme={getColorActivePage(
+                      navItem.id,
+                      currentPageNavigation,
+                    )}
                     ml="1"
                     p="1"
                     pr="3"
@@ -188,7 +195,11 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
   );
 };
 
-const MobileNav = ({ activeElement }: { activeElement: string }) => {
+const MobileNav = ({
+  currentPageNavigation = "",
+}: {
+  currentPageNavigation: string;
+}) => {
   return (
     <Stack
       bg={useColorModeValue("white", "gray.800")}
@@ -199,7 +210,7 @@ const MobileNav = ({ activeElement }: { activeElement: string }) => {
         <MobileNavItem
           key={navItem.label}
           {...navItem}
-          activeElement={activeElement}
+          currentPageNavigation={currentPageNavigation}
         />
       ))}
     </Stack>
@@ -211,7 +222,7 @@ const MobileNavItem = ({
   children,
   href,
   id,
-  activeElement,
+  currentPageNavigation,
 }: NavItem) => {
   const { isOpen, onToggle } = useDisclosure();
 
@@ -231,9 +242,7 @@ const MobileNavItem = ({
             color={useColorModeValue("gray.600", "gray.200")}
           >
             <Badge
-              colorScheme={
-                id === activeElement ? colorsBadge.active : colorsBadge.inActive
-              }
+              colorScheme={getColorActivePage(id, currentPageNavigation ?? "")}
               ml="1"
               p="1"
               pr="2"
@@ -283,7 +292,7 @@ interface NavItem {
   children?: Array<NavItem>;
   href?: string;
   id: string;
-  activeElement?: string;
+  currentPageNavigation?: string | undefined;
 }
 
 const NAV_ITEMS: Array<NavItem> = [
