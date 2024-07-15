@@ -54,7 +54,7 @@ export default function Card({
             cursor: "pointer",
             transform: "scale(1.05)",
             transition: "0.3s",
-          }} // Добавляем эффект при наведении
+          }}
         >
           <Box
             rounded={"lg"}
