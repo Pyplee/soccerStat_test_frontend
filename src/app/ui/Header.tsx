@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Box,
   Flex,
@@ -67,7 +68,12 @@ export default function WithSubnavigation({
             fontFamily={"heading"}
             color={useColorModeValue("gray.800", "white")}
           >
-            Логотип
+            <Image
+              src="/logo.svg"
+              width={100}
+              height={36}
+              alt="Picture of the author"
+            />
           </Text>
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
             <DesktopNav activeElement={activeElement} />
