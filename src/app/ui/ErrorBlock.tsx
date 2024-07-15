@@ -3,13 +3,11 @@
 import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
 
-export default function Error({
-  codeError,
-  messageError,
-}: {
-  codeError: string;
-  messageError: string;
-}) {
+interface ErrorData {
+  code: string | null;
+  message: string | null;
+}
+export default function Error({ code, message }: ErrorData) {
   return (
     <Box textAlign="center" py={10} px={6}>
       <Box display="inline-block">
@@ -27,11 +25,11 @@ export default function Error({
         </Flex>
       </Box>
       <Heading as="h2" size="xl" mt={6} mb={2}>
-        {codeError == "429"
+        {code == "429"
           ? "Превышено количество запросов по API, пожалуйста, подождите немного и обновите сайт."
-          : `Приоизошла ошибка: ${codeError}. Попробуйте перезагрузить сайт или обратитесь к разработчику для решения проблемы.`}
+          : `Приоизошла ошибка: ${code}. Попробуйте перезагрузить сайт или обратитесь к разработчику для решения проблемы.`}
       </Heading>
-      <Text color={"gray.500"}>{messageError}</Text>
+      <Text color={"gray.500"}>{message}</Text>
     </Box>
   );
 }

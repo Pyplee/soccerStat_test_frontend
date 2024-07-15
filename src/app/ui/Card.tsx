@@ -10,29 +10,29 @@ import {
   Image,
   Link,
 } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 export default function Card({
   id,
   name,
   country,
   urlEmblem,
-  pageBaseUrl,
 }: {
   id: number;
   name: string;
   country: string;
   urlEmblem: string;
-  pageBaseUrl: string;
 }): JSX.Element {
   const router = useRouter();
+  const pathname = usePathname();
+  const currentPageNavigation = pathname.split("/")[1] ?? "";
   return (
     <Center pt={12}>
       <Link
-        href={`${pageBaseUrl}/info?id=${id}`}
+        href={`${currentPageNavigation}/info?id=${id}`}
         onClick={(e) => {
           e.preventDefault();
-          router.push(`${pageBaseUrl}/info?id=${id}`);
+          router.push(`${currentPageNavigation}/info?id=${id}`);
         }}
         style={{ textDecoration: "none" }}
         _hover={{ textDecoration: "none" }}
