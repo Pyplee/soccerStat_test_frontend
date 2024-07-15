@@ -2,15 +2,15 @@
 import React from "react";
 import useStore from "../../store";
 import { Grid, Box, Flex, Text } from "@chakra-ui/react";
-import CustomSpinner from "../../ui/customSpinner";
-import ErrorBlock from "../../ui/errorBlock";
-import Pagination from "../../ui/pagination";
+import CustomSpinner from "../../ui/CustomSpinner";
+import ErrorBlock from "../../ui/ErrorBlock";
+import Pagination from "../../ui/Pagination";
 import { getTotalPages, paginate } from "../../pagination";
 import { api, routes } from "../../route";
 import { useSearchParams } from "next/navigation";
-import Breadcrumb from "../../ui/breadcrumb";
-import DateBlock from "../../ui/dateBlock";
-import StatsCard from "../../ui/statsCard";
+import Breadcrumb from "../../ui/Breadcrumb";
+import DateBlock from "../../ui/DateBlock";
+import StatsCard from "../../ui/StatsCard";
 import getResultStatGoals from "../../resultStatGoals";
 import getStatus from "../../getStatus";
 
