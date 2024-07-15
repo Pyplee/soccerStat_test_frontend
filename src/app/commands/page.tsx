@@ -1,14 +1,14 @@
 "use client";
-import Card from "../ui/card";
+import Card from "../ui/Card";
 import React from "react";
 import useStore from "../store";
 import { Grid, Box, Flex, Text } from "@chakra-ui/react";
-import InputSearch from "../ui/inputSearch";
-import CustomSpinner from "../ui/customSpinner";
-import ErrorBlock from "../ui/errorBlock";
-import Pagination from "../ui/pagination";
+import InputSearch from "../ui/InputSearch";
+import CustomSpinner from "../ui/CustomSpinner";
+import ErrorBlock from "../ui/ErrorBlock";
+import Pagination from "../ui/Pagination";
 import { getTotalPages, paginate } from "../pagination";
-import { api, routes } from "../route";
+import { api, routes } from "../apiRoutes";
 
 interface ErrorData {
   code: string;
@@ -18,10 +18,10 @@ interface ErrorData {
 interface Team {
   id: number;
   name: string;
-  crestUrl: string | null;
+  crest: string | null;
 }
 
-export default function MainComponent() {
+export default function CommandsComponent() {
   const [isLoading, setIsLoading] = React.useState(true);
   const [isError, setError] = React.useState<null | ErrorData>(null);
 
@@ -104,9 +104,11 @@ export default function MainComponent() {
         {itemsOnPageArr.map((item: Team) => (
           <Card
             key={item.id}
+            pageBaseUrl={"commands"}
+            id={item.id}
             name={item.name}
             country={""}
-            urlEmblem={item.crestUrl ?? ""}
+            urlEmblem={item.crest ?? ""}
           />
         ))}
       </Grid>

@@ -16,6 +16,37 @@
   }
 }
 
+/* @media (max-width: 470px) {
+  .adaptive-input-date {
+    width: 53px !important;
+  }
+} */
+
+@media (max-width: 1541px) {
+  .adaptive-flex-stats-card {
+    flex-direction: column !important;
+  }
+  .adaptive-stat-command {
+    flex-direction: column !important;
+  }
+  .adaptive-input-date {
+    width: 53px !important;
+  }
+}
+
+@media (max-width: 695px) {
+  .adaptive-input {
+    width: 200px !important;
+  }
+}
+
+@media (max-width: 531px) {
+  .adaptive-pagination-btn {
+    padding: 1px !important;
+    font-size: 0.9rem !important;
+  }
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(

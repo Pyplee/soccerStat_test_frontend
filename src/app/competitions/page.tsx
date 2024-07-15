@@ -1,14 +1,14 @@
 "use client";
-import Card from "../ui/card";
+import Card from "../ui/Card";
 import React from "react";
 import useStore from "../store";
 import { Grid, Box, Flex, Text } from "@chakra-ui/react";
-import InputSearch from "../ui/inputSearch";
-import CustomSpinner from "../ui/customSpinner";
-import ErrorBlock from "../ui/errorBlock";
-import Pagination from "../ui/pagination";
+import InputSearch from "../ui/InputSearch";
+import CustomSpinner from "../ui/CustomSpinner";
+import ErrorBlock from "../ui/ErrorBlock";
+import Pagination from "../ui/Pagination";
 import { getTotalPages, paginate } from "../pagination";
-import { api, routes } from "../route";
+import { api, routes } from "../apiRoutes";
 
 interface ErrorData {
   code: string;
@@ -23,11 +23,11 @@ interface Area {
 interface Competition {
   id: number;
   name: string;
-  emblemUrl: string | null;
+  emblem: string | null;
   area: Area;
 }
 
-export default function MainComponent() {
+export default function CompetitionsComponent() {
   const [isLoading, setIsLoading] = React.useState(true);
   const [isError, setError] = React.useState<null | ErrorData>(null);
 
@@ -107,10 +107,12 @@ export default function MainComponent() {
       <Grid templateColumns="repeat(auto-fill, minmax(300px, 1fr))" gap={6}>
         {itemsOnPageArr.map((item: Competition) => (
           <Card
+            id={item.id}
+            pageBaseUrl={"competitions"}
             key={item.id}
             name={item.name}
             country={item.area.name ?? ""}
-            urlEmblem={item.emblemUrl ?? ""}
+            urlEmblem={item.emblem ?? ""}
           />
         ))}
       </Grid>

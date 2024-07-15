@@ -15,7 +15,6 @@ type InputSearchProps = {
 };
 
 export default function InputSearch({ searchChange }: InputSearchProps) {
-  // Состояние для хранения значения ввода
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +30,7 @@ export default function InputSearch({ searchChange }: InputSearchProps) {
 
   return (
     <Stack spacing={4}>
-      <InputGroup size="md" w="20%">
+      <InputGroup size="md" w="350px" className="adaptive-input">
         <Input
           placeholder="поиск"
           variant="outline"
