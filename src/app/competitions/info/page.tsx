@@ -1,12 +1,12 @@
 "use client";
-import React from "react";
+import React, { Suspense } from "react";
 import useStore from "../../store";
-import { Grid, Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import CustomSpinner from "../../ui/CustomSpinner";
 import ErrorBlock from "../../ui/ErrorBlock";
 import Pagination from "../../ui/Pagination";
 import { getTotalPages, paginate } from "../../pagination";
-import { api, routes } from "../../route";
+import { api, routes } from "../../apiRoutes";
 import { useSearchParams } from "next/navigation";
 import Breadcrumb from "../../ui/Breadcrumb";
 import DateBlock from "../../ui/DateBlock";
@@ -44,7 +44,7 @@ interface Match {
     };
   };
 }
-export default function CompetitionsInfoComponent() {
+function CompetitionsInfoComponent() {
   const [isLoading, setIsLoading] = React.useState(true);
   const [isError, setError] = React.useState<null | ErrorData>(null);
   const [name, setName] = React.useState("");
@@ -79,8 +79,9 @@ export default function CompetitionsInfoComponent() {
         })
         .catch((error) => {
           setIsLoading(false);
+          console.log(error);
           const errorData: ErrorData = {
-            code: error.code,
+            code: error.response.status ?? error.code,
             message: error.message,
           };
           setError((prevState) => ({ ...prevState, ...errorData }));
@@ -200,5 +201,13 @@ export default function CompetitionsInfoComponent() {
         />
       </Flex>
     </Box>
+  );
+}
+
+export default function MainComponent() {
+  return (
+    <Suspense>
+      <CompetitionsInfoComponent />
+    </Suspense>
   );
 }
