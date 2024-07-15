@@ -204,22 +204,3 @@ export default function CompetitionsInfoComponent() {
     </Box>
   );
 }
-
-// // Получение часового пояса пользователя
-// const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-// // Пример даты в формате ISO
-// const isoDate = '2023-10-01T12:00:00Z';
-
-// // Преобразование даты из UTC в часовой пояс пользователя
-// const zonedDate = utcToZonedTime(isoDate, userTimeZone);
-
-// // Форматирование даты в нужный формат
-// const formattedDate = format(zonedDate, 'dd.MM.yyyy HH:mm:ssXXX', { timeZone: userTimeZone });
-
-// console.log(formattedDate); // Например, "01.10.2023 15:00:00+03:00"
-
-// // Преобразование даты из часового пояса пользователя обратно в UTC
-// const utcDate = zonedTimeToUtc(zonedDate, userTimeZone);
-
-// console.log(utcDate.toISOString()); // "2023-10-01T12:00:00.000Z"
