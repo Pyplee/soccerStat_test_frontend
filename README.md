@@ -1,6 +1,6 @@
 <img src="https://github.com/user-attachments/assets/865caf71-aa8c-44c5-8fb0-c6b762cc4653" width="100"/>
 
-# [SoccerStat](https://soccerstat-test-frontend-o4f8-pgndszcap-pyplees-projects.vercel.app/)
+# [SoccerStat](https://soccerstat-test-frontend.vercel.app/)
 
 ## Обзор
 Soccer stat — это тестовое веб-приложение, разработанное на стороннем api [football-data.org](www.football-data.org), оно реализует возможность просмотра матчей и статистики.
