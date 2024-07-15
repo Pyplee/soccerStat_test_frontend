@@ -7,28 +7,26 @@ import InputSearch from "../ui/InputSearch";
 import CustomSpinner from "../ui/CustomSpinner";
 import ErrorBlock from "../ui/ErrorBlock";
 import Pagination from "../ui/Pagination";
-import { getTotalPages, paginate } from "../pagination";
-import { api, routes } from "../apiRoutes";
+import { getTotalPages, paginate } from "../scripts/pagination";
+import { useGetCompetitions } from "../scripts/getFetchData";
 
 interface ErrorData {
-  code: string;
-  message: string;
-}
-
-interface Area {
-  id: number;
-  name: string;
+  code: string | null;
+  message: string | null;
 }
 
 interface Competition {
   id: number;
   name: string;
   emblem: string | null;
-  area: Area;
+  area: {
+    id: number;
+    name: string;
+  };
 }
 
 export default function CompetitionsComponent() {
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setLoading] = React.useState(true);
   const [isError, setError] = React.useState<null | ErrorData>(null);
 
   const competitions = useStore((state) => state.competitions);
@@ -37,32 +35,21 @@ export default function CompetitionsComponent() {
   const [searchCard, setSearchCard] = React.useState("");
   const [currentPage, setCurrentPage] = React.useState(1);
 
+  const { data, loading, error } = useGetCompetitions();
+
   React.useEffect(() => {
-    const fetchCompetitions = async () => {
-      api
-        .get(routes.competitions())
-        .then((response) => {
-          if (response.status !== 200) {
-            throw new Error(response.data.code, response.data.message);
-          }
-          const data = response.data.competitions;
-          setCompetitions(data);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          const errorData: ErrorData = {
-            code: error.code,
-            message: error.message,
-          };
-          setError((prevState) => ({ ...prevState, ...errorData }));
-        });
-    };
+    setLoading(loading);
+    if (error) {
+      setError(error);
+    } else if (data) {
+      setCompetitions(data);
+    }
+  }, [data]);
 
-    fetchCompetitions();
-  }, []);
-
-  function filterItems(array: Competition[], value: string): Competition[] {
+  function getFilteredItems(
+    array: Competition[],
+    value: string,
+  ): Competition[] {
     if (value === "") {
       return array;
     }
@@ -71,24 +58,22 @@ export default function CompetitionsComponent() {
     });
   }
 
-  const filteredArr = filterItems(competitions, searchCard);
-  const itemsOnPageArr = paginate(filteredArr, currentPage);
+  const filteredData = getFilteredItems(competitions, searchCard);
+  const itemsOnCurrentPage = paginate(filteredData, currentPage);
 
   const inputSearchChange = (value: string) => {
     setSearchCard(value);
   };
 
   if (isError !== null) {
-    return (
-      <ErrorBlock codeError={isError.code} messageError={isError.message} />
-    );
+    return <ErrorBlock code={isError.code} message={isError.message} />;
   }
 
   if (isLoading) {
     return <CustomSpinner />;
   }
 
-  if (!itemsOnPageArr.length) {
+  if (!itemsOnCurrentPage.length) {
     return (
       <Box w="90%">
         <InputSearch searchChange={inputSearchChange} />
@@ -105,10 +90,9 @@ export default function CompetitionsComponent() {
     <Box w="90%">
       <InputSearch searchChange={inputSearchChange} />
       <Grid templateColumns="repeat(auto-fill, minmax(300px, 1fr))" gap={6}>
-        {itemsOnPageArr.map((item: Competition) => (
+        {itemsOnCurrentPage.map((item: Competition) => (
           <Card
             id={item.id}
-            pageBaseUrl={"competitions"}
             key={item.id}
             name={item.name}
             country={item.area.name ?? ""}
@@ -119,7 +103,7 @@ export default function CompetitionsComponent() {
       <Flex align="center" justify="center" p={10}>
         <Pagination
           currentPage={currentPage}
-          totalPages={getTotalPages(filteredArr)}
+          totalPages={getTotalPages(filteredData)}
           onPageChange={setCurrentPage}
         />
       </Flex>

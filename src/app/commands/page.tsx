@@ -7,12 +7,12 @@ import InputSearch from "../ui/InputSearch";
 import CustomSpinner from "../ui/CustomSpinner";
 import ErrorBlock from "../ui/ErrorBlock";
 import Pagination from "../ui/Pagination";
-import { getTotalPages, paginate } from "../pagination";
-import { api, routes } from "../apiRoutes";
+import { getTotalPages, paginate } from "../scripts/pagination";
+import { useGetCommands } from "../scripts/getFetchData";
 
 interface ErrorData {
-  code: string;
-  message: string;
+  code: string | null;
+  message: string | null;
 }
 
 interface Team {
@@ -22,7 +22,7 @@ interface Team {
 }
 
 export default function CommandsComponent() {
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setLoading] = React.useState(true);
   const [isError, setError] = React.useState<null | ErrorData>(null);
 
   const teams = useStore((state) => state.teams);
@@ -31,32 +31,16 @@ export default function CommandsComponent() {
   const [searchCard, setSearchCard] = React.useState("");
   const [currentPage, setCurrentPage] = React.useState(1);
 
-  React.useEffect(() => {
-    const fetchCompetitions = async () => {
-      api
-        .get(routes.commands())
-        .then((response) => {
-          if (response.status !== 200) {
-            throw new Error(response.data.code, response.data.message);
-          }
-          const data = response.data.teams;
-          setTeams(data);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          const errorData: ErrorData = {
-            code: error.code,
-            message: error.message,
-          };
-          setError((prevState) => ({ ...prevState, ...errorData }));
-        });
-    };
+  const { data, loading, error } = useGetCommands();
 
-    if (!isError) {
-      fetchCompetitions();
+  React.useEffect(() => {
+    setLoading(loading);
+    if (error) {
+      setError(error);
+    } else if (data) {
+      setTeams(data);
     }
-  }, []);
+  }, [data]);
 
   function filterItems(array: Team[], value: string): Team[] {
     if (value === "") {
@@ -75,9 +59,7 @@ export default function CommandsComponent() {
   };
 
   if (isError !== null) {
-    return (
-      <ErrorBlock codeError={isError.code} messageError={isError.message} />
-    );
+    return <ErrorBlock code={isError.code} message={isError.message} />;
   }
 
   if (isLoading) {
@@ -104,7 +86,6 @@ export default function CommandsComponent() {
         {itemsOnPageArr.map((item: Team) => (
           <Card
             key={item.id}
-            pageBaseUrl={"commands"}
             id={item.id}
             name={item.name}
             country={""}
