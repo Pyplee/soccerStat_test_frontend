@@ -1,31 +1,18 @@
 import { create } from "zustand";
 
-interface Area {
-  id: number;
-  name: string;
-}
-
 interface Competition {
   id: number;
   name: string;
   emblem: string | null;
-  area: Area;
+  area: {
+    id: number;
+    name: string;
+  };
 }
 
 interface Team {
   id: number;
   name: string;
-}
-
-interface Score {
-  fullTime: {
-    home: number | null;
-    away: number | null;
-  };
-  halfTime: {
-    home: number | null;
-    away: number | null;
-  };
 }
 
 interface Match {
@@ -45,7 +32,16 @@ interface Match {
   awayTeam: {
     name: string;
   };
-  score: Score;
+  score: {
+    fullTime: {
+      home: number | null;
+      away: number | null;
+    };
+    halfTime: {
+      home: number | null;
+      away: number | null;
+    };
+  };
 }
 
 interface StoreState {
