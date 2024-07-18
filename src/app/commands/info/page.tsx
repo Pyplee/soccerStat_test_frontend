@@ -97,9 +97,7 @@ function CommandsInfoComponent() {
   }, [dateStart, dateEnd]);
 
   if (isError !== null) {
-    return (
-      <ErrorBlock codeError={isError.code} messageError={isError.message} />
-    );
+    return <ErrorBlock code={isError.code} message={isError.message} />;
   }
 
   if (isLoading) {
