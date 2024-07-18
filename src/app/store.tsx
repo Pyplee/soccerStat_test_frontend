@@ -16,16 +16,11 @@ interface Team {
 }
 
 interface Match {
+  id: number;
+  name: string;
+  emblem: string | null;
   utcDate: string;
-  status:
-    | "SCHEDULED"
-    | "LIVE"
-    | "IN_PLAY"
-    | "PAUSED"
-    | "FINISHED"
-    | "POSTPONED"
-    | "SUSPENDED"
-    | "CANCELED";
+  status: string | null;
   homeTeam: {
     name: string;
   };
@@ -33,6 +28,8 @@ interface Match {
     name: string;
   };
   score: {
+    winner: string | null;
+    duration: string;
     fullTime: {
       home: number | null;
       away: number | null;
