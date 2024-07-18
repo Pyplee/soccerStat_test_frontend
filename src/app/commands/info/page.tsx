@@ -5,13 +5,13 @@ import { Box, Flex, Text } from "@chakra-ui/react";
 import CustomSpinner from "../../ui/CustomSpinner";
 import ErrorBlock from "../../ui/ErrorBlock";
 import Pagination from "../../ui/Pagination";
-import { getTotalPages, paginate } from "../../pagination";
-import { api, routes } from "../../apiRoutes";
+import { getTotalPages, paginate } from "../../scripts/pagination";
+import { api, routes } from "../../scripts/apiRoutes";
 import { useSearchParams } from "next/navigation";
 import Breadcrumb from "../../ui/Breadcrumb";
 import DateBlock from "../../ui/DateBlock";
 import StatsCard from "../../ui/StatsCard";
-import getResultStatGoals from "../../resultStatGoals";
+import getResultStatGoals from "../../scripts/resultStatGoals";
 import getStatus from "../../getStatus";
 
 interface ErrorData {
@@ -51,7 +51,10 @@ function CommandsInfoComponent() {
   const [dateStart, setDateStart] = React.useState<string>("");
   const [dateEnd, setDateEnd] = React.useState<string>("");
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [errorDate, setErrorDate] = React.useState("");
+  const [errorDate, setErrorDate] = React.useState<{
+    errordate1: boolean;
+    errordate2: boolean;
+  }>({ errordate1: false, errordate2: false });
 
   const matches = useStore((state) => state.matches);
   const setMatches = useStore((state) => state.setMatches);
@@ -88,7 +91,7 @@ function CommandsInfoComponent() {
           setError((prevState) => ({ ...prevState, ...errorData }));
         });
     };
-    if (errorDate === "") {
+    if (errorDate.errordate1 === false && errorDate.errordate2 === false) {
       fetchMatches();
     }
   }, [dateStart, dateEnd]);
