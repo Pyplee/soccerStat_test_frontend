@@ -1,22 +1,22 @@
 "use client";
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import useStore from "../../store";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import CustomSpinner from "../../ui/CustomSpinner";
 import ErrorBlock from "../../ui/ErrorBlock";
 import Pagination from "../../ui/Pagination";
 import { getTotalPages, paginate } from "../../scripts/pagination";
-import { api, routes } from "../../scripts/apiRoutes";
 import { useSearchParams } from "next/navigation";
 import Breadcrumb from "../../ui/Breadcrumb";
 import DateBlock from "../../ui/DateBlock";
 import StatsCard from "../../ui/StatsCard";
 import getResultStatGoals from "../../scripts/resultStatGoals";
 import getStatus from "../../getStatus";
+import { useGetMatchesCommandWithDate } from "@/app/scripts/getFetchData";
 
 interface ErrorData {
-  code: string;
-  message: string;
+  code: string | null;
+  message: string | null;
 }
 
 interface Match {
@@ -45,9 +45,9 @@ interface Match {
   };
 }
 function CommandsInfoComponent() {
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setLoading] = React.useState(true);
   const [isError, setError] = React.useState<null | ErrorData>(null);
-  const [name, setName] = React.useState("");
+  const [nameBreadcrumbs, setNameBreadcrumbs] = React.useState<string>("");
   const [dateStart, setDateStart] = React.useState<string>("");
   const [dateEnd, setDateEnd] = React.useState<string>("");
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -60,41 +60,25 @@ function CommandsInfoComponent() {
   const setMatches = useStore((state) => state.setMatches);
 
   const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+  const id = searchParams?.get("id");
 
-  React.useEffect(() => {
-    let pathResponse = routes.commandIdMatches(id);
-    if (dateStart !== "" && dateEnd !== "") {
-      pathResponse = routes.commandIdDate(id, dateStart, dateEnd);
+  const { data, name, loading, error } = useGetMatchesCommandWithDate(
+    id !== null && id !== undefined ? id : null,
+    dateStart,
+    dateEnd,
+  );
+
+  useEffect(() => {
+    if (error !== null) {
+      setError(error);
+    } else if (data) {
+      setMatches(data);
+      if (name !== null) {
+        setNameBreadcrumbs(name);
+      }
     }
-    const fetchMatches = async () => {
-      api
-        .get(pathResponse)
-        .then((response) => {
-          if (response.status !== 200) {
-            throw new Error(response.data.code, response.data.message);
-          }
-          const data = response.data.matches;
-          api.get(routes.commandId(id)).then((response) => {
-            const name = response.data.name;
-            setName(name);
-          });
-          setMatches(data);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          const errorData: ErrorData = {
-            code: error.response.status ?? error.code,
-            message: error.message,
-          };
-          setError((prevState) => ({ ...prevState, ...errorData }));
-        });
-    };
-    if (errorDate.errordate1 === false && errorDate.errordate2 === false) {
-      fetchMatches();
-    }
-  }, [dateStart, dateEnd]);
+    setLoading(loading);
+  }, [data, error]);
 
   if (isError !== null) {
     return <ErrorBlock code={isError.code} message={isError.message} />;
@@ -110,8 +94,8 @@ function CommandsInfoComponent() {
       link: "/competitions",
     },
     {
-      name: name,
-      link: `/competitions/info?id=${id}`,
+      name: nameBreadcrumbs,
+      link: `#`,
     },
   ];
 
