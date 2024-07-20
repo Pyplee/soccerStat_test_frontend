@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "./providers";
+import Header from "@/app/ui/Header";
+import Footer from "@/app/ui/Footer";
 
 export const metadata: Metadata = {
   title: "SoccerStat",
@@ -15,7 +17,11 @@ export default function RootLayout({
   return (
     <html lang="ru" suppressHydrationWarning className="min-h-full">
       <body className="bg-[#f5f7fa] min-h-full">
-        <Providers>{children}</Providers>
+        <Providers>
+          <Header />
+          <main className="bg-[#f5f7fa] flex justify-center">{children}</main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

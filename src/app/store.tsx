@@ -1,15 +1,13 @@
 import { create } from "zustand";
 
-interface Area {
-  id: number;
-  name: string;
-}
-
 interface Competition {
   id: number;
   name: string;
   emblem: string | null;
-  area: Area;
+  area: {
+    id: number;
+    name: string;
+  };
 }
 
 interface Team {
@@ -17,35 +15,30 @@ interface Team {
   name: string;
 }
 
-interface Score {
-  fullTime: {
-    home: number | null;
-    away: number | null;
-  };
-  halfTime: {
-    home: number | null;
-    away: number | null;
-  };
-}
-
 interface Match {
+  id: number;
+  name: string;
+  emblem: string | null;
   utcDate: string;
-  status:
-    | "SCHEDULED"
-    | "LIVE"
-    | "IN_PLAY"
-    | "PAUSED"
-    | "FINISHED"
-    | "POSTPONED"
-    | "SUSPENDED"
-    | "CANCELED";
+  status: string | null;
   homeTeam: {
     name: string;
   };
   awayTeam: {
     name: string;
   };
-  score: Score;
+  score: {
+    winner: string | null;
+    duration: string;
+    fullTime: {
+      home: number | null;
+      away: number | null;
+    };
+    halfTime: {
+      home: number | null;
+      away: number | null;
+    };
+  };
 }
 
 interface StoreState {

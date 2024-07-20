@@ -29,9 +29,6 @@
   .adaptive-stat-command {
     flex-direction: column !important;
   }
-  .adaptive-input-date {
-    width: 53px !important;
-  }
 }
 
 @media (max-width: 695px) {
@@ -44,6 +41,9 @@
   .adaptive-pagination-btn {
     padding: 1px !important;
     font-size: 0.9rem !important;
+  }
+  .adaptive-input-date {
+    width: 53px !important;
   }
 }
 
