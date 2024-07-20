@@ -1,8 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { api, routes } from "../scripts/apiRoutes";
-import validateDate from "@/app/scripts/validateDate";
 
-const validateDateIsError = (dateStartCheck: string, dateEndCheck: string) => {
+const validateDateIsCorrect = (
+  dateStartCheck: string,
+  dateEndCheck: string,
+) => {
+  if (dateStartCheck === null || dateStartCheck === null) {
+    return false;
+  }
+  if (dateStartCheck === "" || dateStartCheck === "") {
+    return false;
+  }
   const a = dateStartCheck === "";
   const b = dateEndCheck === "";
   if (a === b) {
@@ -29,7 +37,7 @@ interface FetchState<T> {
   error: ErrorData | null;
 }
 
-interface FetchStateWithName<T> {
+interface FetchStateStats<T> {
   data: T | null;
   loading: boolean;
   error: ErrorData | null;
@@ -83,188 +91,151 @@ interface Match {
   };
 }
 
-// const useFetch = <T,>(url: string): FetchState<T> => {
-//   const [data, setData] = useState<T | null>(null);
-//   const [loading, setLoading] = useState<boolean>(true);
-//   const [error, setError] = useState<string | null>(null);
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const response = await fetch(url);
-//         if (!response.ok) {
-//           throw new Error('Network response was not ok');
-//         }
-//         const result: T = await response.json();
-//         setData(result);
-//       } catch (error) {
-//         setError((error as Error).message);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchData();
-//   }, [url]);
-
-//   return { data, loading, error };
-// };
-
-const useGetCompetitions = (): FetchState<Competition[]> => {
-  const [data, setData] = useState<Competition[] | null>(null);
+const useFetchDataCards = <T>(
+  url: string,
+  keyForData: string,
+  initialData: T | null = null,
+): FetchState<T> => {
+  const [data, setData] = useState<T | null>(initialData);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<ErrorData | null>(null);
+  const cache = useRef<Record<string, T>>({});
 
   useEffect(() => {
     const fetchData = async () => {
-      api
-        .get(routes.competitions())
-        .then((response) => {
-          if (response.status !== 200) {
-            throw new Error(response.data.code, response.data.message);
-          }
-          const data = response.data.competitions;
-          setData(data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          const errorData: ErrorData = {
-            code: err.code || "UNKNOWN_ERROR",
-            message: err.message || "An unknown error occurred",
-          };
-          setError(errorData);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+      if (cache.current[url]) {
+        const data = cache.current[url];
+        setData(data);
+      } else {
+        api
+          .get(url)
+          .then((response) => {
+            const data = response.data[keyForData];
+            setData(data);
+          })
+          .catch((err) => {
+            const errorData: ErrorData = {
+              code: err.code || "UNKNOWN_ERROR",
+              message: err.message || "An unknown error occurred",
+            };
+            setError(errorData);
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      }
     };
 
     fetchData();
-  }, []);
+  }, [url]);
 
   return { data, loading, error };
+};
+
+const useGetCompetitions = (): FetchState<Competition[]> => {
+  return useFetchDataCards<Competition[]>(
+    routes.competitions(),
+    "competitions",
+  );
 };
 
 const useGetCommands = (): FetchState<Team[]> => {
-  const [data, setData] = useState<Team[] | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<ErrorData | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      api
-        .get(routes.commands())
-        .then((response) => {
-          if (response.status !== 200) {
-            throw new Error(response.data.code, response.data.message);
-          }
-          const data = response.data.teams;
-          setData(data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          setLoading(false);
-          const errorData: ErrorData = {
-            code: err.code || "UNKNOWN_ERROR",
-            message: err.message || "An unknown error occurred",
-          };
-          setError(errorData);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    };
-
-    fetchData();
-  }, []);
-
-  return { data, loading, error };
+  return useFetchDataCards<Team[]>(routes.commands(), "teams");
 };
 
-const useGetCompetitionMatches = (
-  id: number | string,
-  dateStart: string,
-  dateEnd: string,
-): FetchStateWithName<Match[]> => {
-  const [data, setData] = useState<Match[] | null>(null);
-  const [name, setName] = useState<"string" | null>(null);
+const useFetchDataStats = <T>(
+  url: string,
+  urlWithDate: string | null,
+  urlForGetName: string,
+  initialData: T | null = null,
+): FetchStateStats<T> => {
+  const [data, setData] = useState<T | null>(initialData);
+  const [name, setName] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<ErrorData | null>(null);
-  // const [responseOnDate, setResponseOnDate] = useState<boolean>(false);
-  // const result = validateDateIsError(dateStart, dateEnd)
-  // setResponseOnDate(result);
+  const cache = useRef<Record<string, T>>({});
 
   useEffect(() => {
-    // let pathToResponse;
-    // if (responseOnDate) {
-    //   pathToResponse = routes.competitionIdDate(id, dateStart, dateEnd);
-    // } else {
-    //   pathToResponse = routes.competitionIdMatches(id);
-    // }
+    let mainUrl = "";
+    if (urlWithDate !== null) {
+      mainUrl = urlWithDate;
+    } else {
+      mainUrl = url;
+    }
+
     const fetchData = async () => {
-      api
-        .get(routes.competitionIdMatches(id))
-        .then((response) => {
-          if (response.status !== 200) {
-            throw new Error(response.data.code, response.data.message);
-          }
-          const data = response.data.matches;
-          const name = response.data.competition.name;
-          setName(name);
-          setData(data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          setLoading(false);
-          const errorData: ErrorData = {
-            code: err.code || "UNKNOWN_ERROR",
-            message: err.message || "An unknown error occurred",
-          };
-          setError(errorData);
-        })
-        .finally(() => {
-          setLoading(false);
+      if (cache.current[url]) {
+        const data = cache.current[url];
+        setData(data);
+      } else {
+        api
+          .get(mainUrl)
+          .then((response) => {
+            const data = response.data.matches;
+            setData(data);
+          })
+          .catch((err) => {
+            const errorData: ErrorData = {
+              code: err.code || "UNKNOWN_ERROR",
+              message: err.message || "An unknown error occurred",
+            };
+            setError(errorData);
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+        api.get(urlForGetName).then((response) => {
+          const nameResponse = response.data.name;
+          setName(nameResponse);
         });
-    };
-
-    fetchData();
-  }, []);
-
-  return { data, loading, error, name };
-};
-
-const getCompetitionMatchesToDate = async (
-  id: number | string,
-  dateStart: string,
-  dateEnd: string,
-) => {
-  let data;
-  let name;
-  let errorData: ErrorData | null;
-  await api
-    .get(routes.competitionIdDate(id, dateStart, dateEnd))
-    .then((response) => {
-      if (response.status !== 200) {
-        throw new Error(response.data.code, response.data.message);
       }
-      data = response.data.matches;
-      name = response.data.competition.name;
-    })
-    .catch((err) => {
-      errorData.code = err.code;
-      errorData.message = err.message;
-    });
+    };
 
-  if (errorData === null) {
-    return { dataFunc: null, nameFunc: null, errorFunc: errorData };
-  } else {
-    return { dataFunc: data, nameFunc: name, errorFunc: null };
+    fetchData();
+  }, [url, urlWithDate]);
+
+  return { data, name, loading, error };
+};
+
+const useGetMatchesCompetitionWithDate = (
+  id: string | null,
+  dateStart: string | null = null,
+  dateEnd: string | null = null,
+): FetchStateStats<Match[]> => {
+  let urlWithDate = null;
+  if (dateStart !== null && dateEnd !== null) {
+    if (validateDateIsCorrect(dateStart, dateEnd)) {
+      urlWithDate = routes.competitionIdDate(id, dateStart, dateEnd);
+    } else {
+      urlWithDate = null;
+    }
   }
+  const url = routes.competitionIdMatches(id);
+  const urlForGetName = routes.competitionId(id);
+  return useFetchDataStats<Match[]>(url, urlWithDate, urlForGetName);
+};
+
+const useGetMatchesCommandWithDate = (
+  id: string | null,
+  dateStart: string | null = null,
+  dateEnd: string | null = null,
+): FetchStateStats<Match[]> => {
+  let urlWithDate = null;
+  if (dateStart !== null && dateEnd !== null) {
+    if (validateDateIsCorrect(dateStart, dateEnd)) {
+      urlWithDate = routes.commandIdDate(id, dateStart, dateEnd);
+    } else {
+      urlWithDate = null;
+    }
+  }
+  const url = routes.commandIdMatches(id);
+  const urlForGetName = routes.commandId(id);
+  return useFetchDataStats<Match[]>(url, urlWithDate, urlForGetName);
 };
 
 export {
   useGetCompetitions,
   useGetCommands,
-  useGetCompetitionMatches,
-  getCompetitionMatchesToDate,
+  useGetMatchesCompetitionWithDate,
+  useGetMatchesCommandWithDate,
 };
