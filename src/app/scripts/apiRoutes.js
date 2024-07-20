@@ -11,6 +11,7 @@ const api = axios.create({
 
 const routes = {
   competitions: () => "competitions",
+  competitionId: (id) => `competitions/${id}`,
   competitionIdMatches: (id) => `competitions/${id}/matches`,
   competitionIdDate: (id, dateFrom, dateTo) =>
     `competitions/${id}/matches?dateFrom=${dateFrom}&dateTo=${dateTo}`,
