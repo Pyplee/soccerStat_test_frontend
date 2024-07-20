@@ -1,14 +1,14 @@
 "use client";
-import Card from "../ui/Card";
-import React from "react";
-import useStore from "../store";
+import Card from "@/app/ui/Card";
+import React, { useEffect } from "react";
+import useStore from "@/app/store";
 import { Grid, Box, Flex, Text } from "@chakra-ui/react";
-import InputSearch from "../ui/InputSearch";
-import CustomSpinner from "../ui/CustomSpinner";
-import ErrorBlock from "../ui/ErrorBlock";
-import Pagination from "../ui/Pagination";
-import { getTotalPages, paginate } from "../scripts/pagination";
-import { useGetCompetitions } from "../scripts/getFetchData";
+import InputSearch from "@/app/ui/InputSearch";
+import CustomSpinner from "@/app/ui/CustomSpinner";
+import ErrorBlock from "@/app/ui/ErrorBlock";
+import Pagination from "@/app/ui/Pagination";
+import { getTotalPages, paginate } from "@/app/scripts/pagination";
+import { useGetCompetitions } from "@/app/scripts/getFetchData";
 
 interface ErrorData {
   code: string | null;
@@ -37,14 +37,14 @@ export default function CompetitionsComponent() {
 
   const { data, loading, error } = useGetCompetitions();
 
-  React.useEffect(() => {
+  useEffect(() => {
     setLoading(loading);
     if (error) {
       setError(error);
     } else if (data) {
       setCompetitions(data);
     }
-  }, [data]);
+  }, [data, error]);
 
   function getFilteredItems(
     array: Competition[],
