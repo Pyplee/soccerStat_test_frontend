@@ -1,7 +1,9 @@
 import { createProxyMiddleware } from "http-proxy-middleware";
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_API;
+
 const proxyConfig: any = {
-  target: "https://api.football-data.org/v4",
+  target: baseUrl,
   changeOrigin: true,
   timeout: 10000,
   pathRewrite: { "^/api/proxy": "" },
