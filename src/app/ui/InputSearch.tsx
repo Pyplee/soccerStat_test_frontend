@@ -49,7 +49,6 @@ export default function InputSearch({ searchChange }: InputSearchProps) {
             h="95%"
             rounded="xl"
             onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-              e.preventDefault();
               handleClearInput();
             }}
           />
