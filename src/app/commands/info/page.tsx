@@ -1,17 +1,17 @@
 "use client";
 import React, { Suspense, useEffect } from "react";
-import useStore from "../../store";
+import useStore from "@/app/store";
 import { Box, Flex, Text } from "@chakra-ui/react";
-import CustomSpinner from "../../ui/CustomSpinner";
-import ErrorBlock from "../../ui/ErrorBlock";
-import Pagination from "../../ui/Pagination";
-import { getTotalPages, paginate } from "../../scripts/pagination";
+import CustomSpinner from "@/app/ui/CustomSpinner";
+import ErrorBlock from "@/app/ui/ErrorBlock";
+import Pagination from "@/app/ui/Pagination";
+import { getTotalPages, paginate } from "@/app/scripts/pagination";
 import { useSearchParams } from "next/navigation";
-import Breadcrumb from "../../ui/Breadcrumb";
-import DateBlock from "../../ui/DateBlock";
-import StatsCard from "../../ui/statsCard/StatsCard";
-import getResultStatGoals from "../../scripts/resultStatGoals";
-import getStatus from "../../getStatus";
+import Breadcrumb from "@/app/ui/Breadcrumb";
+import DateBlock from "@/app/ui/DateBlock";
+import StatsCard from "@/app/ui/statsCard/StatsCard";
+import getResultStatGoals from "@/app/scripts/resultStatGoals";
+import getStatus from "@/app/getStatus";
 import { useGetMatchesCommandWithDate } from "@/app/scripts/getFetchData";
 
 interface ErrorData {
