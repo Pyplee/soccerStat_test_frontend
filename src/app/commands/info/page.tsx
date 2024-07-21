@@ -9,7 +9,7 @@ import { getTotalPages, paginate } from "../../scripts/pagination";
 import { useSearchParams } from "next/navigation";
 import Breadcrumb from "../../ui/Breadcrumb";
 import DateBlock from "../../ui/DateBlock";
-import StatsCard from "../../ui/StatsCard";
+import StatsCard from "../../ui/statsCard/StatsCard";
 import getResultStatGoals from "../../scripts/resultStatGoals";
 import getStatus from "../../getStatus";
 import { useGetMatchesCommandWithDate } from "@/app/scripts/getFetchData";
