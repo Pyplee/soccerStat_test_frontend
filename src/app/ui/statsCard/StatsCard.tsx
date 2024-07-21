@@ -5,7 +5,7 @@ import CommandInfo from "@/app/ui/statsCard/CommandInfo";
 import StatsGoals from "@/app/ui/statsCard/StatsGoals";
 import DateAndTimeInfo from "@/app/ui/statsCard/DateAndTimeInfo";
 import { toZonedTime } from "date-fns-tz";
-import "../globals.css";
+import "@/app/globals.css";
 
 type StatsProps = {
   dateAndTime: string;
