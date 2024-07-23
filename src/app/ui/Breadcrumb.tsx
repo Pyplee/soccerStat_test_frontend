@@ -11,16 +11,13 @@ export default function BreadcrumbComponent({
 }: {
   breadcrumbInfo: BreadcrumbInfo[];
 }) {
-  const [firstEl, secondEl] = breadcrumbInfo;
   return (
     <Breadcrumb fontWeight="medium" fontSize="sm">
-      <BreadcrumbItem>
-        <BreadcrumbLink href={firstEl.link}>{firstEl.name}</BreadcrumbLink>
-      </BreadcrumbItem>
-
-      <BreadcrumbItem>
-        <BreadcrumbLink href={secondEl.link}>{secondEl.name}</BreadcrumbLink>
-      </BreadcrumbItem>
+      {breadcrumbInfo.map((item, index) => (
+        <BreadcrumbItem key={index}>
+          <BreadcrumbLink href={item.link}>{item.name}</BreadcrumbLink>
+        </BreadcrumbItem>
+      ))}
     </Breadcrumb>
   );
 }

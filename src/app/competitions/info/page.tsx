@@ -9,7 +9,7 @@ import { getTotalPages, paginate } from "@/app/scripts/pagination";
 import { useSearchParams } from "next/navigation";
 import Breadcrumb from "@/app/ui/Breadcrumb";
 import DateBlock from "@/app/ui/DateBlock";
-import StatsCard from "@/app/ui/StatsCard";
+import StatsCard from "@/app/ui/statsCard/StatsCard";
 import getResultStatGoals from "@/app/scripts/resultStatGoals";
 import getStatus from "@/app/getStatus";
 import { useGetMatchesCompetitionWithDate } from "@/app/scripts/getFetchData";
@@ -134,6 +134,15 @@ function CompetitionsInfoComponent() {
     );
   }
 
+  const resultStatGoalsArr = itemsOnPageArr.map((item: Match) => {
+    return getResultStatGoals(
+      item.score.fullTime.home,
+      item.score.fullTime.away,
+      item.score.halfTime.home,
+      item.score.halfTime.away,
+    );
+  });
+
   return (
     <Box w="90%">
       <Breadcrumb breadcrumbInfo={arrProps} />
@@ -163,19 +172,14 @@ function CompetitionsInfoComponent() {
         direction={{ base: "column", md: "column" }}
         minW="100%"
       >
-        {itemsOnPageArr.map((item: Match) => (
+        {itemsOnPageArr.map((item: Match, index: number) => (
           <StatsCard
             key={item.id}
             dateAndTime={item.utcDate}
             commandA={item.homeTeam.name}
             commandB={item.awayTeam.name}
             status={getStatus(item.status)}
-            resultStatGoals={getResultStatGoals(
-              item.score.fullTime.home,
-              item.score.fullTime.away,
-              item.score.halfTime.home,
-              item.score.halfTime.away,
-            )}
+            resultGoals={resultStatGoalsArr[index]}
           />
         ))}
       </Flex>

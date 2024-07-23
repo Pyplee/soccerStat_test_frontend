@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "./providers";
-import Header from "@/app/ui/Header";
+import Header from "@/app/ui/header/Header";
 import Footer from "@/app/ui/Footer";
 
 export const metadata: Metadata = {
@@ -19,7 +19,9 @@ export default function RootLayout({
       <body className="bg-[#f5f7fa] min-h-full">
         <Providers>
           <Header />
-          <main className="bg-[#f5f7fa] flex justify-center">{children}</main>
+          <main className="bg-[#f5f7fa] flex justify-center min-h-lvh">
+            {children}
+          </main>
           <Footer />
         </Providers>
       </body>

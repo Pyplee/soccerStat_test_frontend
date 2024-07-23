@@ -25,7 +25,7 @@ export default function Card({
 }): JSX.Element {
   const router = useRouter();
   const pathname = usePathname();
-  const currentPageNavigation = pathname.split("/")[1] ?? "";
+  const currentPageNavigation = pathname?.split("/")[1] ?? "";
   return (
     <Center pt={12}>
       <Link

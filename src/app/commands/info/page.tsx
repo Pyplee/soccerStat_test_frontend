@@ -1,17 +1,17 @@
 "use client";
 import React, { Suspense, useEffect } from "react";
-import useStore from "../../store";
+import useStore from "@/app/store";
 import { Box, Flex, Text } from "@chakra-ui/react";
-import CustomSpinner from "../../ui/CustomSpinner";
-import ErrorBlock from "../../ui/ErrorBlock";
-import Pagination from "../../ui/Pagination";
-import { getTotalPages, paginate } from "../../scripts/pagination";
+import CustomSpinner from "@/app/ui/CustomSpinner";
+import ErrorBlock from "@/app/ui/ErrorBlock";
+import Pagination from "@/app/ui/Pagination";
+import { getTotalPages, paginate } from "@/app/scripts/pagination";
 import { useSearchParams } from "next/navigation";
-import Breadcrumb from "../../ui/Breadcrumb";
-import DateBlock from "../../ui/DateBlock";
-import StatsCard from "../../ui/StatsCard";
-import getResultStatGoals from "../../scripts/resultStatGoals";
-import getStatus from "../../getStatus";
+import Breadcrumb from "@/app/ui/Breadcrumb";
+import DateBlock from "@/app/ui/DateBlock";
+import StatsCard from "@/app/ui/statsCard/StatsCard";
+import getResultStatGoals from "@/app/scripts/resultStatGoals";
+import getStatus from "@/app/getStatus";
 import { useGetMatchesCommandWithDate } from "@/app/scripts/getFetchData";
 
 interface ErrorData {
@@ -134,6 +134,15 @@ function CommandsInfoComponent() {
     );
   }
 
+  const resultStatGoalsArr = itemsOnPageArr.map((item: Match) => {
+    return getResultStatGoals(
+      item.score.fullTime.home,
+      item.score.fullTime.away,
+      item.score.halfTime.home,
+      item.score.halfTime.away,
+    );
+  });
+
   return (
     <Box w="90%">
       <Breadcrumb breadcrumbInfo={arrProps} />
@@ -163,19 +172,14 @@ function CommandsInfoComponent() {
         direction={{ base: "column", md: "column" }}
         minW="100%"
       >
-        {itemsOnPageArr.map((item: Match) => (
+        {itemsOnPageArr.map((item: Match, index: number) => (
           <StatsCard
             key={item.id}
             dateAndTime={item.utcDate}
             commandA={item.homeTeam.name}
             commandB={item.awayTeam.name}
             status={getStatus(item.status)}
-            resultStatGoals={getResultStatGoals(
-              item.score.fullTime.home,
-              item.score.fullTime.away,
-              item.score.halfTime.home,
-              item.score.halfTime.away,
-            )}
+            resultGoals={resultStatGoalsArr[index]}
           />
         ))}
       </Flex>
