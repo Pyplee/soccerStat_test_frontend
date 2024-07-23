@@ -11,7 +11,7 @@ type StatsProps = {
   dateAndTime: string;
   commandA: string;
   commandB: string;
-  resultStatGoals: string;
+  resultGoals: string;
   status: string;
 };
 
@@ -19,7 +19,7 @@ export default function StatsCard({
   dateAndTime,
   commandA,
   commandB,
-  resultStatGoals,
+  resultGoals,
   status,
 }: StatsProps) {
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -40,7 +40,7 @@ export default function StatsCard({
       <DateAndTimeInfo date={dateFromatted} time={timeFormatted} />
       <Status status={status} />
       <CommandInfo commandA={commandA} commandB={commandB} />
-      <StatsGoals result={resultStatGoals} />
+      <StatsGoals result={resultGoals} />
     </StatsCase>
   );
 }
