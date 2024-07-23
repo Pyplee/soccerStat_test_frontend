@@ -134,6 +134,15 @@ function CommandsInfoComponent() {
     );
   }
 
+  const resultStatGoalsArr = itemsOnPageArr.map((item: Match) => {
+    return getResultStatGoals(
+      item.score.fullTime.home,
+      item.score.fullTime.away,
+      item.score.halfTime.home,
+      item.score.halfTime.away,
+    );
+  });
+
   return (
     <Box w="90%">
       <Breadcrumb breadcrumbInfo={arrProps} />
@@ -163,19 +172,14 @@ function CommandsInfoComponent() {
         direction={{ base: "column", md: "column" }}
         minW="100%"
       >
-        {itemsOnPageArr.map((item: Match) => (
+        {itemsOnPageArr.map((item: Match, index: number) => (
           <StatsCard
             key={item.id}
             dateAndTime={item.utcDate}
             commandA={item.homeTeam.name}
             commandB={item.awayTeam.name}
             status={getStatus(item.status)}
-            resultStatGoals={getResultStatGoals(
-              item.score.fullTime.home,
-              item.score.fullTime.away,
-              item.score.halfTime.home,
-              item.score.halfTime.away,
-            )}
+            resultGoals={resultStatGoalsArr[index]}
           />
         ))}
       </Flex>
