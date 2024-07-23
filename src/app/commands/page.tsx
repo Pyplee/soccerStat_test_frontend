@@ -82,7 +82,11 @@ export default function CommandsComponent() {
   return (
     <Box w="90%">
       <InputSearch searchChange={inputSearchChange} />
-      <Grid templateColumns="repeat(auto-fill, minmax(300px, 1fr))" gap={6}>
+      <Grid
+        templateColumns="repeat(auto-fill, minmax(300px, 1fr))"
+        gap={6}
+        justifyItems={"center"}
+      >
         {itemsOnPageArr.map((item: Team) => (
           <Card
             key={item.id}

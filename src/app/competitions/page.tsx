@@ -89,7 +89,11 @@ export default function CompetitionsComponent() {
   return (
     <Box w="90%">
       <InputSearch searchChange={inputSearchChange} />
-      <Grid templateColumns="repeat(auto-fill, minmax(300px, 1fr))" gap={6}>
+      <Grid
+        templateColumns="repeat(auto-fill, minmax(300px, 1fr))"
+        gap={6}
+        justifyItems={"center"}
+      >
         {itemsOnCurrentPage.map((item: Competition) => (
           <Card
             id={item.id}
