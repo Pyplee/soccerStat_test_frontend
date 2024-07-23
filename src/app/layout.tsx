@@ -19,7 +19,9 @@ export default function RootLayout({
       <body className="bg-[#f5f7fa] min-h-full">
         <Providers>
           <Header />
-          <main className="bg-[#f5f7fa] flex justify-center">{children}</main>
+          <main className="bg-[#f5f7fa] flex justify-center min-h-lvh">
+            {children}
+          </main>
           <Footer />
         </Providers>
       </body>
