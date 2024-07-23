@@ -29,7 +29,7 @@ export default function InputSearch({ searchChange }: InputSearchProps) {
   };
 
   return (
-    <Stack spacing={4}>
+    <Stack spacing={4} pt="1rem">
       <InputGroup size="md" w="350px" className="adaptive-input">
         <Input
           placeholder="поиск"
@@ -38,7 +38,7 @@ export default function InputSearch({ searchChange }: InputSearchProps) {
           rounded="xl"
           pr="3rem"
           bg="white"
-          value={inputValue} // Связывание состояния с инпутом
+          value={inputValue}
           onChange={handleInputChange}
         />
         <InputRightElement width="3rem">
