@@ -20,7 +20,7 @@ export default function WithSubnavigation() {
   const pathname = usePathname();
   const currentPageNavigation = pathname?.split("/")[1] ?? "";
   return (
-    <Box pb="1%">
+    <Box mb="1%">
       <Flex
         bg={useColorModeValue("white", "gray.800")}
         color={useColorModeValue("gray.600", "white")}
