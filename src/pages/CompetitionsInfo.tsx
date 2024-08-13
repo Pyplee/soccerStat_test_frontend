@@ -10,7 +10,7 @@ import DateBlock from '../components/DateBlock';
 import StatsCard from '../components/statsCard/index';
 import getResultStatGoals from '../scripts/resultStatGoals';
 import getStatus from '../scripts/getStatus';
-import { useGetMatchesCompetitionWithDate } from '../scripts/getFetchData';
+import { useGetMatchesCompetitionWithDate } from '../hooks';
 import { IMatch } from '../interfaces/IMatch';
 
 function CompetitionsInfoComponent() {

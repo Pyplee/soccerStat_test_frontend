@@ -6,7 +6,7 @@ import CustomSpinner from '../components/CustomSpinner';
 import ErrorBlock from '../components/ErrorBlock';
 import Pagination from '../components/Pagination';
 import { getTotalPages, paginate } from '../scripts/pagination';
-import { useGetCompetitions } from '../scripts/getFetchData';
+import { useGetCompetitions } from '../hooks';
 import { ICompetition } from '../interfaces/ICompetition';
 
 export default function CompetitionsComponent() {

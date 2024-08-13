@@ -10,7 +10,7 @@ import DateBlock from '../components/DateBlock';
 import StatsCard from '../components/statsCard/index';
 import getResultStatGoals from '../scripts/resultStatGoals';
 import getStatus from '../scripts/getStatus';
-import { useGetMatchesCommandWithDate } from '../scripts/getFetchData';
+import { useGetMatchesCommandWithDate } from '../hooks';
 import { IMatch } from '../interfaces/IMatch';
 
 function CommandsInfoComponent() {

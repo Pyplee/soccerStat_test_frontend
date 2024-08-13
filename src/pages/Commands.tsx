@@ -6,7 +6,7 @@ import CustomSpinner from '../components/CustomSpinner';
 import ErrorBlock from '../components/ErrorBlock';
 import Pagination from '../components/Pagination';
 import { getTotalPages, paginate } from '../scripts/pagination';
-import { useGetCommands } from '../scripts/getFetchData';
+import { useGetCommands } from '../hooks';
 import { ICommand } from '../interfaces/ICommand';
 
 export default function CommandsComponent() {
