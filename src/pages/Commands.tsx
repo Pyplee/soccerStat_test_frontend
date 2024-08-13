@@ -7,12 +7,7 @@ import ErrorBlock from '../components/ErrorBlock';
 import Pagination from '../components/Pagination';
 import { getTotalPages, paginate } from '../scripts/pagination';
 import { useGetCommands } from '../scripts/getFetchData';
-
-interface Team {
-  id: number;
-  name: string;
-  crest: string | null;
-}
+import { ICommand } from '../interfaces/ICommand';
 
 export default function CommandsComponent() {
   const [searchCard, setSearchCard] = React.useState('');
@@ -29,7 +24,7 @@ export default function CommandsComponent() {
     return <CustomSpinner />;
   }
 
-  function filterItems(array: Team[], value: string): Team[] {
+  function filterItems(array: ICommand[], value: string): ICommand[] {
     if (value === '') {
       return array;
     }
@@ -38,7 +33,7 @@ export default function CommandsComponent() {
     });
   }
 
-  const filteredArr = filterItems(commands as Team[], searchCard);
+  const filteredArr = filterItems(commands as ICommand[], searchCard);
   const itemsOnPageArr = paginate(filteredArr, currentPage);
 
   const inputSearchChange = (value: string) => {
@@ -66,7 +61,7 @@ export default function CommandsComponent() {
         gap={6}
         justifyItems={'center'}
       >
-        {itemsOnPageArr.map((item: Team) => (
+        {itemsOnPageArr.map((item: ICommand) => (
           <Card
             key={item.id}
             id={item.id}

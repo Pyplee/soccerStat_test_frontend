@@ -12,15 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import getColorActivePage from './getColorsActivePage';
-
-interface NavItem {
-  label: string;
-  subLabel?: string;
-  children?: Array<NavItem>;
-  href?: string;
-  id: string;
-  currentPageNavigation?: string | undefined;
-}
+import { INavItem } from '../../interfaces/INavItem';
 
 export default function MobileNavItem({
   label,
@@ -28,7 +20,7 @@ export default function MobileNavItem({
   href,
   id,
   currentPageNavigation,
-}: NavItem) {
+}: INavItem) {
   const { isOpen, onToggle } = useDisclosure();
 
   return (

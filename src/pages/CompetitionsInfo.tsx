@@ -11,32 +11,8 @@ import StatsCard from '../components/statsCard/index';
 import getResultStatGoals from '../scripts/resultStatGoals';
 import getStatus from '../scripts/getStatus';
 import { useGetMatchesCompetitionWithDate } from '../scripts/getFetchData';
+import { IMatch } from '../interfaces/IMatch';
 
-interface Match {
-  id: number;
-  name: string;
-  emblem: string | null;
-  utcDate: string;
-  status: string;
-  homeTeam: {
-    name: string;
-  };
-  awayTeam: {
-    name: string;
-  };
-  score: {
-    winner: string | null;
-    duration: string;
-    fullTime: {
-      home: number | null;
-      away: number | null;
-    };
-    halfTime: {
-      home: number | null;
-      away: number | null;
-    };
-  };
-}
 function CompetitionsInfoComponent() {
   const [dateStart, setDateStart] = React.useState<string>('');
   const [dateEnd, setDateEnd] = React.useState<string>('');
@@ -76,7 +52,7 @@ function CompetitionsInfoComponent() {
       link: `#`,
     },
   ];
-  const itemsOnPageArr = paginate(matches as Match[], currentPage);
+  const itemsOnPageArr = paginate(matches as IMatch[], currentPage);
 
   if (!itemsOnPageArr.length) {
     return (
@@ -110,7 +86,7 @@ function CompetitionsInfoComponent() {
     );
   }
 
-  const resultStatGoalsArr = itemsOnPageArr.map((item: Match) => {
+  const resultStatGoalsArr = itemsOnPageArr.map((item: IMatch) => {
     return getResultStatGoals(
       item.score.fullTime.home,
       item.score.fullTime.away,
@@ -118,7 +94,7 @@ function CompetitionsInfoComponent() {
       item.score.halfTime.away,
     );
   });
-  const totalPages = getTotalPages(matches as Match[]);
+  const totalPages = getTotalPages(matches as IMatch[]);
 
   return (
     <Box w="90%">
@@ -149,7 +125,7 @@ function CompetitionsInfoComponent() {
         direction={{ base: 'column', md: 'column' }}
         minW="100%"
       >
-        {itemsOnPageArr.map((item: Match, index: number) => (
+        {itemsOnPageArr.map((item: IMatch, index: number) => (
           <StatsCard
             key={item.id}
             dateAndTime={item.utcDate}

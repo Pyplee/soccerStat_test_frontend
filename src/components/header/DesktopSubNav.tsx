@@ -8,17 +8,9 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { ChevronRightIcon } from '@chakra-ui/icons';
+import { INavItem } from '../../interfaces/INavItem';
 
-interface NavItem {
-  label: string;
-  subLabel?: string;
-  children?: Array<NavItem>;
-  href?: string;
-  id: string;
-  currentPageNavigation?: string | undefined;
-}
-
-export default function DesktopSubNav({ label, href, subLabel }: NavItem) {
+export default function DesktopSubNav({ label, href, subLabel }: INavItem) {
   return (
     <Box
       as="a"

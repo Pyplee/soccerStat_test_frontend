@@ -1,11 +1,7 @@
 import React from 'react';
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
-
-interface ErrorData {
-  code: string | null;
-  message: string | null;
-}
+import { IErrorData } from '../interfaces/IErrorData';
 
 function getTextError(code: string, message: string) {
   console.log(code, message);
@@ -40,7 +36,7 @@ function getTextError(code: string, message: string) {
   return { codeFormated: newCode, messageFormated: newMessage };
 }
 
-export default function Error({ code, message }: ErrorData) {
+export default function Error({ code, message }: IErrorData) {
   const { codeFormated, messageFormated } = getTextError(
     code ?? '',
     message ?? '',

@@ -1,5 +1,22 @@
 import { useState, useEffect, useRef } from 'react';
 import { api, routes } from '../scripts/apiRoutes';
+import { ICompetition } from '../interfaces/ICompetition';
+import { ICommand } from '../interfaces/ICommand';
+import { IMatch } from '../interfaces/IMatch';
+import { IErrorData } from '../interfaces/IErrorData';
+
+interface FetchState<T> {
+  data: T | null;
+  loading: boolean;
+  error: IErrorData | null;
+}
+
+interface FetchStateStats<T> {
+  data: T | null;
+  loading: boolean;
+  error: IErrorData | null;
+  name: string | null;
+}
 
 const validateDateIsCorrect = (
   dateStartCheck: string,
@@ -31,66 +48,6 @@ const validateDateIsCorrect = (
   }
 };
 
-interface FetchState<T> {
-  data: T | null;
-  loading: boolean;
-  error: ErrorData | null;
-}
-
-interface FetchStateStats<T> {
-  data: T | null;
-  loading: boolean;
-  error: ErrorData | null;
-  name: string | null;
-}
-
-interface ErrorData {
-  code: string | null;
-  message: string | null;
-}
-
-interface Competition {
-  id: number;
-  name: string;
-  emblem: string | null;
-  area: {
-    id: number;
-    name: string;
-  };
-}
-
-interface Team {
-  id: number;
-  name: string;
-  crest: string | null;
-}
-
-interface Match {
-  id: number;
-  name: string;
-  emblem: string | null;
-  utcDate: string;
-  status: string | null;
-  homeTeam: {
-    name: string;
-  };
-  awayTeam: {
-    name: string;
-  };
-  score: {
-    winner: string | null;
-    duration: string;
-    fullTime: {
-      home: number | null;
-      away: number | null;
-    };
-    halfTime: {
-      home: number | null;
-      away: number | null;
-    };
-  };
-}
-
 const useFetchDataCards = <T>(
   url: string,
   keyForData: string,
@@ -98,7 +55,7 @@ const useFetchDataCards = <T>(
 ): FetchState<T> => {
   const [data, setData] = useState<T | null>(initialData);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<ErrorData | null>(null);
+  const [error, setError] = useState<IErrorData | null>(null);
   const cache = useRef<Record<string, T>>({});
 
   useEffect(() => {
@@ -114,7 +71,7 @@ const useFetchDataCards = <T>(
             setData(data);
           })
           .catch((err) => {
-            const errorData: ErrorData = {
+            const errorData: IErrorData = {
               code: err.response.status.toString() || 'UNKNOWN_ERROR',
               message: err.message || 'An unknown error occurred',
             };
@@ -132,15 +89,15 @@ const useFetchDataCards = <T>(
   return { data, loading, error };
 };
 
-const useGetCompetitions = (): FetchState<Competition[]> => {
-  return useFetchDataCards<Competition[]>(
+const useGetCompetitions = (): FetchState<ICompetition[]> => {
+  return useFetchDataCards<ICompetition[]>(
     routes.competitions(),
     'competitions',
   );
 };
 
-const useGetCommands = (): FetchState<Team[]> => {
-  return useFetchDataCards<Team[]>(routes.commands(), 'teams');
+const useGetCommands = (): FetchState<ICommand[]> => {
+  return useFetchDataCards<ICommand[]>(routes.commands(), 'teams');
 };
 
 const useFetchDataStats = <T>(
@@ -152,7 +109,7 @@ const useFetchDataStats = <T>(
   const [data, setData] = useState<T | null>(initialData);
   const [name, setName] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<ErrorData | null>(null);
+  const [error, setError] = useState<IErrorData | null>(null);
   const cache = useRef<Record<string, T>>({});
 
   useEffect(() => {
@@ -177,7 +134,7 @@ const useFetchDataStats = <T>(
           .catch((err) => {
             console.log(err);
 
-            const errorData: ErrorData = {
+            const errorData: IErrorData = {
               code: err.response.status.toString() || 'UNKNOWN_ERROR',
               message: err.message || 'An unknown error occurred',
             };
@@ -203,7 +160,7 @@ const useGetMatchesCompetitionWithDate = (
   id: string | null,
   dateStart: string | null = null,
   dateEnd: string | null = null,
-): FetchStateStats<Match[]> => {
+): FetchStateStats<IMatch[]> => {
   let urlWithDate = null;
   if (dateStart !== null && dateEnd !== null) {
     if (validateDateIsCorrect(dateStart, dateEnd)) {
@@ -214,14 +171,14 @@ const useGetMatchesCompetitionWithDate = (
   }
   const url = routes.competitionIdMatches(id!);
   const urlForGetName = routes.competitionId(id!);
-  return useFetchDataStats<Match[]>(url, urlWithDate, urlForGetName);
+  return useFetchDataStats<IMatch[]>(url, urlWithDate, urlForGetName);
 };
 
 const useGetMatchesCommandWithDate = (
   id: string | null,
   dateStart: string | null = null,
   dateEnd: string | null = null,
-): FetchStateStats<Match[]> => {
+): FetchStateStats<IMatch[]> => {
   let urlWithDate = null;
   if (dateStart !== null && dateEnd !== null) {
     if (validateDateIsCorrect(dateStart, dateEnd)) {
@@ -232,7 +189,7 @@ const useGetMatchesCommandWithDate = (
   }
   const url = routes.commandIdMatches(id!);
   const urlForGetName = routes.commandId(id!);
-  return useFetchDataStats<Match[]>(url, urlWithDate, urlForGetName);
+  return useFetchDataStats<IMatch[]>(url, urlWithDate, urlForGetName);
 };
 
 export {

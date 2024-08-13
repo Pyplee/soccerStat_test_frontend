@@ -11,19 +11,11 @@ import {
 } from '@chakra-ui/react';
 import getColorActivePage from './getColorsActivePage';
 import DesktopSubNav from './DesktopSubNav';
-
-interface NavItem {
-  label: string;
-  subLabel?: string;
-  children?: Array<NavItem>;
-  href?: string;
-  id: string;
-  currentPageNavigation?: string | undefined;
-}
+import { INavItem } from '../../interfaces/INavItem';
 
 interface Props {
   currentPageNavigation: string;
-  NAV_ITEMS: NavItem[];
+  NAV_ITEMS: INavItem[];
 }
 
 export default function DesktopNav({

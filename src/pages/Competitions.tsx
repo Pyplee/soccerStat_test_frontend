@@ -7,16 +7,7 @@ import ErrorBlock from '../components/ErrorBlock';
 import Pagination from '../components/Pagination';
 import { getTotalPages, paginate } from '../scripts/pagination';
 import { useGetCompetitions } from '../scripts/getFetchData';
-
-interface Competition {
-  id: number;
-  name: string;
-  emblem: string | null;
-  area: {
-    id: number;
-    name: string;
-  };
-}
+import { ICompetition } from '../interfaces/ICompetition';
 
 export default function CompetitionsComponent() {
   const [searchCard, setSearchCard] = React.useState('');
@@ -33,9 +24,9 @@ export default function CompetitionsComponent() {
   }
 
   function getFilteredItems(
-    array: Competition[],
+    array: ICompetition[],
     value: string,
-  ): Competition[] {
+  ): ICompetition[] {
     if (value === '') {
       return array;
     }
@@ -45,7 +36,7 @@ export default function CompetitionsComponent() {
   }
 
   const filteredData = getFilteredItems(
-    competitions as Competition[],
+    competitions as ICompetition[],
     searchCard,
   );
   const itemsOnCurrentPage = paginate(filteredData, currentPage);
@@ -75,7 +66,7 @@ export default function CompetitionsComponent() {
         gap={6}
         justifyItems={'center'}
       >
-        {itemsOnCurrentPage.map((item: Competition) => (
+        {itemsOnCurrentPage.map((item: ICompetition) => (
           <Card
             id={item.id}
             key={item.id}

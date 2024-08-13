@@ -13,6 +13,7 @@ import {
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import DesktopNav from './DesktopNav';
 import MobileNav from './MobileNav';
+import { INavItem } from '../../interfaces/INavItem';
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
@@ -77,16 +78,7 @@ export default function WithSubnavigation() {
   );
 }
 
-interface NavItem {
-  label: string;
-  subLabel?: string;
-  children?: Array<NavItem>;
-  href?: string;
-  id: string;
-  currentPageNavigation?: string | undefined;
-}
-
-const NAV_ITEMS: Array<NavItem> = [
+const NAV_ITEMS: Array<INavItem> = [
   {
     label: 'Лиги',
     href: '/competitions',
