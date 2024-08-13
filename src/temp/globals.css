@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+@media (max-width: 1541px) {
+  .adaptive-flex-stats-card {
+    flex-direction: column !important;
+  }
+  .adaptive-stat-command {
+    flex-direction: column !important;
+  }
+}
+
+@media (max-width: 693px) {
+  .adaptive-input {
+    width: 200px !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+}
+
+@media (max-width: 531px) {
+  .adaptive-pagination-btn {
+    padding: 1px !important;
+    font-size: 0.9rem !important;
+  }
+  .adaptive-input-date {
+    width: 53px !important;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+#root {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+#root > div:not([class]) {
+  flex: 1;
+  background-color: lightgrey;
+  padding: 20px;
+  border: 1px solid grey;
+}
+
+footer {
+  flex-shrink: 0;
+  background-color: gray;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
