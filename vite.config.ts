@@ -6,6 +6,7 @@ const baseUrl = "https://api.football-data.org/v4";
 export default defineConfig({
   plugins: [react()],
   server: {
+    port: 3000,
     proxy: {
       '/api/proxy': {
         target: baseUrl,
