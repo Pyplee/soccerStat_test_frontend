@@ -1,18 +1,16 @@
 import React from 'react';
 import {
   BrowserRouter as Router,
-  Route,
   Routes,
+  Route,
   Navigate,
 } from 'react-router-dom';
-
 import Layout from './layout';
 import CommandsInfo from './pages/CommandsInfo';
 import Commands from './pages/Commands';
 import Competitions from './pages/Competitions';
 import CompetitionsInfo from './pages/CompetitionsInfo';
 import NotFound from './pages/NotFound';
-// import NotFound from './pages/NotFound';
 
 const App: React.FC = () => {
   return (

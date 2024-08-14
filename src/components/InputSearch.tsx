@@ -5,6 +5,7 @@ import {
   InputRightElement,
   Stack,
   IconButton,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 
@@ -35,7 +36,7 @@ export default function InputSearch({ searchChange }: InputSearchProps) {
           colorScheme="black"
           rounded="xl"
           pr="3rem"
-          bg="white"
+          bg={useColorModeValue('white', 'gray.800')}
           value={inputValue}
           onChange={handleInputChange}
         />

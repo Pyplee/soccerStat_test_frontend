@@ -8,13 +8,7 @@ export default function Status({ status }: StatusProps) {
   return (
     <>
       <Flex w="12%" justifyContent={'center'} align={'center'}>
-        <Badge
-          colorScheme={'gray'}
-          textAlign="center"
-          rounded="md"
-          fontSize={'md'}
-          textColor={'gray.700'}
-        >
+        <Badge textAlign="center" rounded="md" fontSize={'md'}>
           {status}
         </Badge>
       </Flex>

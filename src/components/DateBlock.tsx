@@ -52,20 +52,20 @@ export default function DateSelect({
   setErrorDate,
 }: DateRangeProps) {
   const updateStartDate = (e: React.FormEvent<HTMLInputElement>) => {
-    const newStartDate = e.target?.value;
+    const newStartDate = (e.target as HTMLTextAreaElement).value;
     validateDateError(newStartDate, dateEnd, setErrorDate);
     setDateStart(newStartDate);
   };
 
   const updateEndDate = (e: React.FormEvent<HTMLInputElement>) => {
-    const newEndDate = e.target?.value;
+    const newEndDate = (e.target as HTMLTextAreaElement).value;
     validateDateError(dateStart, newEndDate, setErrorDate);
     setDateEnd(newEndDate);
   };
 
   return (
     <Flex align="center" justify="start" p={2}>
-      <Text color={'black'} as="samp" size="xl" fontSize="xl" p={2}>
+      <Text as="samp" size="xl" fontSize="xl" p={2}>
         с
       </Text>
       <Box>
@@ -76,11 +76,11 @@ export default function DateSelect({
           maxW="250px"
           className="adaptive-input-date"
           onChange={updateStartDate}
-          borderColor={errorDate.errordate1 ? 'red.500' : 'gray.200'}
+          borderColor={errorDate.errordate1 ? 'red.500' : 'gray.500'}
           value={dateStart}
         />
       </Box>
-      <Text color={'black'} as="samp" size="xl" fontSize="xl" p={2}>
+      <Text as="samp" size="xl" fontSize="xl" p={2}>
         по
       </Text>
       <Box>
@@ -91,7 +91,7 @@ export default function DateSelect({
           maxW="250px"
           className="adaptive-input-date"
           onChange={updateEndDate}
-          borderColor={errorDate.errordate2 ? 'red.500' : 'gray.200'}
+          borderColor={errorDate.errordate2 ? 'red.500' : 'gray.500'}
           value={dateEnd}
         />
       </Box>

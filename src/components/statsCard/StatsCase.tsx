@@ -11,7 +11,8 @@ export default function StatsCase({
         py={'2'}
         shadow={'xl'}
         border={'2px solid'}
-        borderColor={useColorModeValue('gray.300', 'gray.500')}
+        borderColor={useColorModeValue('gray.300', 'gray.600')}
+        bg={useColorModeValue('gray.200', 'gray.700')}
         rounded={'lg'}
         mb={5}
         className="adaptive-stats-card"

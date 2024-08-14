@@ -58,15 +58,7 @@ function CompetitionsInfoComponent() {
     return (
       <Box w="90%">
         <Breadcrumb breadcrumbInfo={arrProps} />
-        <Text
-          color={'black'}
-          as="h1"
-          size="xl"
-          fontSize="2xl"
-          fontWeight="bold"
-          mt={6}
-          mb={2}
-        >
+        <Text as="h1" size="xl" fontSize="2xl" fontWeight="bold" mt={6} mb={2}>
           Матчи
         </Text>
         <DateBlock
@@ -99,15 +91,7 @@ function CompetitionsInfoComponent() {
   return (
     <Box w="90%">
       <Breadcrumb breadcrumbInfo={arrProps} />
-      <Text
-        color={'black'}
-        as="h1"
-        size="xl"
-        fontSize="2xl"
-        fontWeight="bold"
-        mt={6}
-        mb={2}
-      >
+      <Text as="h1" size="xl" fontSize="2xl" fontWeight="bold" mt={6} mb={2}>
         Матчи
       </Text>
       <DateBlock

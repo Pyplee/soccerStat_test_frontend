@@ -15,23 +15,11 @@ export default function CommandInfo({ commandA, commandB }: CommandProps) {
         w={'40%'}
         align={'center'}
       >
-        <Badge
-          colorScheme={'gray'}
-          textAlign="center"
-          rounded="md"
-          fontSize={'md'}
-          textColor={'gray.700'}
-        >
+        <Badge textAlign="center" rounded="md" fontSize={'md'}>
           {commandA}
         </Badge>
         <Text textAlign="center">-</Text>
-        <Badge
-          colorScheme={'gray'}
-          textAlign="center"
-          rounded="md"
-          fontSize={'md'}
-          textColor={'gray.700'}
-        >
+        <Badge textAlign="center" rounded="md" fontSize={'md'}>
           {commandB}
         </Badge>
       </Flex>

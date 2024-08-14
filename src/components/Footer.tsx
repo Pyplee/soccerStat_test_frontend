@@ -47,7 +47,7 @@ export default function SmallWithSocial() {
   const linkGithub = 'https://github.com/Pyplee/soccerstat_test_frontend';
   return (
     <Box
-      bg={useColorModeValue('white', 'white')}
+      bg={useColorModeValue('white', 'gray.800')}
       color={useColorModeValue('gray.700', 'gray.200')}
     >
       <Container

@@ -12,7 +12,7 @@ export default function BreadcrumbComponent({
   breadcrumbInfo: BreadcrumbInfo[];
 }) {
   return (
-    <Breadcrumb fontWeight="medium" fontSize="sm">
+    <Breadcrumb fontWeight="medium" fontSize="sm" pt={5}>
       {breadcrumbInfo.map((item, index) => (
         <BreadcrumbItem key={index}>
           <BreadcrumbLink href={item.link}>{item.name}</BreadcrumbLink>
