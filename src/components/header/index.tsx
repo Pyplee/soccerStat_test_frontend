@@ -3,78 +3,128 @@ import { useLocation } from 'react-router-dom';
 import {
   Box,
   Flex,
-  Text,
+  Icon,
+  HStack,
   IconButton,
-  Collapse,
-  useColorModeValue,
-  useBreakpointValue,
+  Button,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
   useDisclosure,
+  useColorModeValue,
+  Stack,
+  Link,
+  Badge,
+  useColorMode,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-import DesktopNav from './DesktopNav';
-import MobileNav from './MobileNav';
 import { INavItem } from '../../interfaces/INavItem';
+import getColorActivePage from './getColorsActivePage';
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+import { HiMiniLanguage } from 'react-icons/hi2';
+import { NavLink } from './NavLink';
+import Logo from './Logo';
 
-export default function WithSubnavigation() {
-  const { isOpen, onToggle } = useDisclosure();
+export default function WithAction() {
+  const { colorMode, toggleColorMode } = useColorMode();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const location = useLocation();
   const pathname = location.pathname;
   const currentPageNavigation = pathname.split('/')[1] ?? '';
+  const linkColor = useColorModeValue('gray.600', 'gray.200');
+  const linkHoverColor = useColorModeValue('gray.800', 'white');
+
   return (
-    <Box mb="1%">
-      <Flex
-        bg={useColorModeValue('white', 'gray.800')}
-        color={useColorModeValue('gray.600', 'white')}
-        minH={'60px'}
-        py={{ base: 2 }}
-        px={{ base: 4 }}
-        borderBottom={1}
-        borderStyle={'solid'}
-        borderColor={useColorModeValue('gray.200', 'gray.900')}
-        align={'center'}
-      >
-        <Flex
-          flex={{ base: 1, md: 'auto' }}
-          ml={{ base: -2 }}
-          display={{ base: 'flex', md: 'none' }}
-        >
+    <>
+      <Box bg={useColorModeValue('white', 'gray.800')} px={4}>
+        <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <IconButton
-            onClick={onToggle}
-            icon={
-              isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
-            }
-            variant={'ghost'}
-            aria-label={'Toggle Navigation'}
+            size={'md'}
+            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+            aria-label={'Open Menu'}
+            display={{ md: 'none' }}
+            onClick={isOpen ? onClose : onOpen}
           />
-        </Flex>
-        <Flex flex={{ base: 1 }} justify={{ base: 'end', md: 'start' }}>
-          <Text
-            textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-            fontFamily={'heading'}
-            color={useColorModeValue('gray.800', 'white')}
-          >
-            <img
-              src="/logo.svg"
-              width={100}
-              height={36}
-              alt="Picture of the author"
-            />
-          </Text>
-          <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
-            <DesktopNav
-              currentPageNavigation={currentPageNavigation}
-              NAV_ITEMS={NAV_ITEMS}
-            />
+          <HStack spacing={8} alignItems={'center'}>
+            <Box>
+              <Logo />
+            </Box>
+            <HStack
+              as={'nav'}
+              spacing={4}
+              display={{ base: 'none', md: 'flex' }}
+            >
+              {NAV_ITEMS.map((navItem) => (
+                <Link key={navItem.id} href={navItem.href ?? '#'}>
+                  <Box
+                    fontSize={'sm'}
+                    fontWeight={500}
+                    color={linkColor}
+                    _hover={{
+                      textDecoration: 'none',
+                      color: linkHoverColor,
+                    }}
+                  >
+                    <Badge
+                      colorScheme={getColorActivePage(
+                        navItem.id,
+                        currentPageNavigation,
+                      )}
+                      ml="1"
+                      p="1"
+                      pr="3"
+                      pl="3"
+                      textAlign="center"
+                      rounded="xl"
+                    >
+                      {navItem.label}
+                    </Badge>
+                  </Box>
+                </Link>
+              ))}
+            </HStack>
+          </HStack>
+          <Flex alignItems={'center'}>
+            <Button onClick={toggleColorMode} variant="ghost">
+              {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+            </Button>
+            <Menu>
+              <MenuButton
+                as={Button}
+                rounded={'full'}
+                variant={'link'}
+                cursor={'pointer'}
+                minW={0}
+                pl={4}
+                borderColor="none"
+              >
+                <Icon as={HiMiniLanguage} boxSize={5} />
+              </MenuButton>
+              <MenuList>
+                <MenuItem>Lng 1</MenuItem>
+                <MenuItem>Lng 2</MenuItem>
+              </MenuList>
+            </Menu>
           </Flex>
         </Flex>
-      </Flex>
-      <Collapse in={isOpen} animateOpacity>
-        <MobileNav
-          currentPageNavigation={currentPageNavigation}
-          NAV_ITEMS={NAV_ITEMS}
-        />
-      </Collapse>
-    </Box>
+
+        {isOpen ? (
+          <Box pb={4} display={{ md: 'none' }}>
+            <Stack as={'nav'} spacing={4}>
+              {NAV_ITEMS.map((navItem) => (
+                <NavLink
+                  key={navItem.id}
+                  label={navItem.label}
+                  id={navItem.id}
+                  href={navItem.href}
+                ></NavLink>
+              ))}
+            </Stack>
+          </Box>
+        ) : null}
+      </Box>
+    </>
   );
 }
 
