@@ -64,7 +64,7 @@ export default function WithAction() {
 
   return (
     <>
-      <Box bg={useColorModeValue('white', 'gray.800')} px={4}>
+      <Box bg={useColorModeValue('white', 'gray.600')} px={4}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <IconButton
             size={'md'}

@@ -30,7 +30,7 @@ export default function Card({
           maxW={'330px'}
           minW={'130px'}
           w={'full'}
-          bg={useColorModeValue('white', 'gray.800')}
+          bg={useColorModeValue('white', 'gray.500')}
           boxShadow={'2xl'}
           rounded={'lg'}
           pos={'relative'}
@@ -91,11 +91,7 @@ export default function Card({
             >
               {name}
             </Heading>
-            <Text
-              color={'gray.500'}
-              fontSize={'sm'}
-              textTransform={'uppercase'}
-            >
+            <Text fontSize={'sm'} textTransform={'uppercase'}>
               {country}
             </Text>
           </Stack>

@@ -38,7 +38,7 @@ export default function InputSearch({ searchChange }: InputSearchProps) {
           colorScheme="black"
           rounded="xl"
           pr="3rem"
-          bg={useColorModeValue('white', 'gray.800')}
+          bg={useColorModeValue('white', 'gray.600')}
           value={inputValue}
           onChange={handleInputChange}
         />
