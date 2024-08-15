@@ -60,7 +60,7 @@ const useFetchDataStats = <T>(
     };
 
     fetchData();
-  }, [url, urlWithDate]);
+  }, [url, urlWithDate, urlForGetName]);
 
   return { data, name, loading, error };
 };
