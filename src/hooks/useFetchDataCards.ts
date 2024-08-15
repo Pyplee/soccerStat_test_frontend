@@ -44,7 +44,7 @@ const useFetchDataCards = <T>(
     };
 
     fetchData();
-  }, [url]);
+  }, [url, keyForData]);
 
   return { data, loading, error };
 };
