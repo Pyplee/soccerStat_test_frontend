@@ -12,7 +12,7 @@ export default function StatsCase({
         shadow={'xl'}
         border={'2px solid'}
         borderColor={useColorModeValue('gray.300', 'gray.600')}
-        bg={useColorModeValue('gray.200', 'gray.600')}
+        bg={useColorModeValue('gray.100', 'gray.600')}
         rounded={'lg'}
         mb={5}
         className="adaptive-stats-card"

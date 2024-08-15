@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Badge, Text } from '@chakra-ui/react';
+import { Flex, Text } from '@chakra-ui/react';
 
 type CommandProps = {
   commandA: string;
@@ -15,13 +15,11 @@ export default function CommandInfo({ commandA, commandB }: CommandProps) {
         w={'40%'}
         align={'center'}
       >
-        <Badge textAlign="center" rounded="md" fontSize={'md'}>
-          {commandA}
-        </Badge>
-        <Text textAlign="center">-</Text>
-        <Badge textAlign="center" rounded="md" fontSize={'md'}>
-          {commandB}
-        </Badge>
+        {commandA}
+        <Text textAlign="center" pr={1} pl={1}>
+          -
+        </Text>
+        {commandB}
       </Flex>
     </>
   );

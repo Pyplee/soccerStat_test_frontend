@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Badge } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 
 type DateTimeProps = {
   date: string;
@@ -9,14 +9,10 @@ export default function DateAndTimeInfo({ date, time }: DateTimeProps) {
   return (
     <>
       <Flex w="10%" justifyContent={'center'}>
-        <Badge textAlign="center" rounded="md" fontSize={'md'}>
-          {date}
-        </Badge>
+        {date}
       </Flex>
       <Flex w="12%" justifyContent={'center'}>
-        <Badge textAlign="center" rounded="md" fontSize={'md'}>
-          {time}
-        </Badge>
+        {time}
       </Flex>
     </>
   );
