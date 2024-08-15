@@ -1,10 +1,11 @@
 import React from 'react';
 import { Box, Heading, Text, Button } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export default function NotFound() {
   const navigate = useNavigate();
-
+  const { t } = useTranslation();
   const handleButtonClick = () => {
     navigate('/');
   };
@@ -21,10 +22,10 @@ export default function NotFound() {
         404
       </Heading>
       <Text fontSize="18px" mt={3} mb={2}>
-        Page Not Found
+        {t('error.404.title')}
       </Text>
       <Text color={'gray.500'} mb={6}>
-        The page you&apos;re looking for does not seem to exist
+        {t('error.404.message')}
       </Text>
 
       <Button
@@ -34,7 +35,7 @@ export default function NotFound() {
         variant="solid"
         onClick={handleButtonClick}
       >
-        Go to Home
+        {t('error.404.btnComeBack')}
       </Button>
     </Box>
   );

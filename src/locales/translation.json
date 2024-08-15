@@ -47,6 +47,11 @@
           "title": "403 Restricted Resource",
           "message": "You tried to access a resource that exists, but is not available to you. Check api token."
         },
+        "404": {
+            "title": "Page Not Found",
+            "message": "The page you&apos;re looking for does not seem to exist",
+            "btnComeBack": "Go to Home"
+          },
         "filterNotFound": "Nothing was found for your query. Try changing your query."
       }
     }
@@ -98,6 +103,11 @@
           "403": {
               "title": "403 Ограниченный доступ",
               "message": "Вы попытались получить доступ к ресурсу, который существует, но недоступен. Проверьте API токен."
+          },
+          "404": {
+            "title": "Страница не найдена",
+            "message": "Страница, которую вы ищете, похоже, не существует",
+            "btnComeBack": "Домой"
           },
           "filterNotFound": "По вашему запросу ничего не найдено. Попробуйте изменить запрос."
       }
