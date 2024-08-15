@@ -8,6 +8,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
+import { useTranslation } from 'react-i18next';
 
 type InputSearchProps = {
   searchChange: (value: string) => void;
@@ -15,6 +16,7 @@ type InputSearchProps = {
 
 export default function InputSearch({ searchChange }: InputSearchProps) {
   const [inputValue, setInputValue] = useState('');
+  const { t } = useTranslation();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -31,7 +33,7 @@ export default function InputSearch({ searchChange }: InputSearchProps) {
     <Stack spacing={4} pt="1rem">
       <InputGroup size="md" w="350px" className="adaptive-input">
         <Input
-          placeholder="поиск"
+          placeholder={t('input.placeholder')}
           variant="outline"
           colorScheme="black"
           rounded="xl"

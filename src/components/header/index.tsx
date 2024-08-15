@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   Box,
   Flex,
-  Icon,
+  Image,
   HStack,
   IconButton,
   Button,
@@ -25,6 +25,7 @@ import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { HiMiniLanguage } from 'react-icons/hi2';
 import { NavLink } from './NavLink';
 import Logo from './Logo';
+import { useTranslation } from 'react-i18next';
 
 export default function WithAction() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -34,6 +35,32 @@ export default function WithAction() {
   const currentPageNavigation = pathname.split('/')[1] ?? '';
   const linkColor = useColorModeValue('gray.600', 'gray.200');
   const linkHoverColor = useColorModeValue('gray.800', 'white');
+
+  const { t, i18n } = useTranslation();
+  const [lang, setLang] = useState(i18n.language);
+
+  const NAV_ITEMS: Array<INavItem> = [
+    {
+      label: t('navbar.competitions'),
+      href: '/competitions',
+      id: 'competitions',
+    },
+    {
+      label: t('navbar.сommands'),
+      href: '/commands',
+      id: 'commands',
+    },
+  ];
+
+  useEffect(() => {
+    setLang(i18n.language);
+  }, [i18n.language]);
+
+  function handleLngChange(newLang: string) {
+    if (newLang !== lang) {
+      i18n.changeLanguage(newLang);
+    }
+  }
 
   return (
     <>
@@ -98,12 +125,18 @@ export default function WithAction() {
                 minW={0}
                 pl={4}
                 borderColor="none"
-              >
-                <Icon as={HiMiniLanguage} boxSize={5} />
-              </MenuButton>
+                leftIcon={<HiMiniLanguage />}
+                aria-label="Language"
+              ></MenuButton>
               <MenuList>
-                <MenuItem>Lng 1</MenuItem>
-                <MenuItem>Lng 2</MenuItem>
+                <MenuItem onClick={() => handleLngChange('en')}>
+                  English
+                  <Image src="/en-flag.svg" boxSize={7} pl={1} />
+                </MenuItem>
+                <MenuItem onClick={() => handleLngChange('ru')}>
+                  Русский
+                  <Image src="/ru-flag.svg" boxSize={7} pl={1} />
+                </MenuItem>
               </MenuList>
             </Menu>
           </Flex>
@@ -127,16 +160,3 @@ export default function WithAction() {
     </>
   );
 }
-
-const NAV_ITEMS: Array<INavItem> = [
-  {
-    label: 'Лиги',
-    href: '/competitions',
-    id: 'competitions',
-  },
-  {
-    label: 'Команды',
-    href: '/commands',
-    id: 'commands',
-  },
-];

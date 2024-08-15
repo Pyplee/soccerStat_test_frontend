@@ -8,12 +8,14 @@ import Pagination from '../components/Pagination';
 import { getTotalPages, paginate } from '../scripts/pagination';
 import { useGetCompetitions } from '../hooks';
 import { ICompetition } from '../interfaces/ICompetition';
+import { useTranslation } from 'react-i18next';
 
 export default function CompetitionsComponent() {
   const [searchCard, setSearchCard] = React.useState('');
   const [currentPage, setCurrentPage] = React.useState(1);
   const { data, loading, error } = useGetCompetitions();
   const competitions = data ? data : [];
+  const { t } = useTranslation();
 
   if (error !== null) {
     return <ErrorBlock code={error.code} message={error.message} />;
@@ -51,7 +53,7 @@ export default function CompetitionsComponent() {
         <InputSearch searchChange={inputSearchChange} />
         <Flex align="center" justify="center" p={10}>
           <Text color={'gray.500'} as="h2" size="xl" mt={6} mb={2}>
-            По вашему запросу ничего не найдено. Попробуйте изменить запрос.
+            {t('error.filterNotFound')}
           </Text>
         </Flex>
       </Box>

@@ -8,15 +8,16 @@ import { useSearchParams } from 'react-router-dom';
 import Breadcrumb from '../components/Breadcrumb';
 import DateBlock from '../components/DateBlock';
 import StatsCard from '../components/statsCard/index';
-import getResultStatGoals from '../scripts/resultStatGoals';
-import getStatus from '../scripts/getStatus';
+import getResultStatGoals from '../scripts/getResultStatGoals';
 import { useGetMatchesCompetitionWithDate } from '../hooks';
 import { IMatch } from '../interfaces/IMatch';
+import { useTranslation } from 'react-i18next';
 
 function CompetitionsInfoComponent() {
   const [dateStart, setDateStart] = React.useState<string>('');
   const [dateEnd, setDateEnd] = React.useState<string>('');
   const [currentPage, setCurrentPage] = React.useState(1);
+  const { t } = useTranslation();
 
   const [errorDate, setErrorDate] = React.useState<{
     errordate1: boolean;
@@ -44,7 +45,7 @@ function CompetitionsInfoComponent() {
 
   const arrProps = [
     {
-      name: 'Лиги',
+      name: t('info.breadcrumbs.leagues'),
       link: '/competitions',
     },
     {
@@ -59,7 +60,7 @@ function CompetitionsInfoComponent() {
       <Box w="90%">
         <Breadcrumb breadcrumbInfo={arrProps} />
         <Text as="h1" size="xl" fontSize="2xl" fontWeight="bold" mt={6} mb={2}>
-          Матчи
+          {t('info.title')}
         </Text>
         <DateBlock
           setDateStart={setDateStart}
@@ -71,7 +72,7 @@ function CompetitionsInfoComponent() {
         />
         <Flex align="center" justify="center" p={10}>
           <Text color={'gray.500'} as="h2" size="xl" mt={6} mb={2}>
-            По вашему запросу ничего не найдено. Попробуйте изменить запрос.
+            {t('error.filterNotFound')}
           </Text>
         </Flex>
       </Box>
@@ -79,12 +80,16 @@ function CompetitionsInfoComponent() {
   }
 
   const resultStatGoalsArr = itemsOnPageArr.map((item: IMatch) => {
-    return getResultStatGoals(
+    const result = getResultStatGoals(
       item.score.fullTime.home,
       item.score.fullTime.away,
       item.score.halfTime.home,
       item.score.halfTime.away,
     );
+    if (result === null) {
+      return t('info.statuses.noResult');
+    }
+    return result;
   });
   const totalPages = getTotalPages(matches as IMatch[]);
 
@@ -92,7 +97,7 @@ function CompetitionsInfoComponent() {
     <Box w="90%">
       <Breadcrumb breadcrumbInfo={arrProps} />
       <Text as="h1" size="xl" fontSize="2xl" fontWeight="bold" mt={6} mb={2}>
-        Матчи
+        {t('info.title')}
       </Text>
       <DateBlock
         setDateStart={setDateStart}
@@ -115,7 +120,7 @@ function CompetitionsInfoComponent() {
             dateAndTime={item.utcDate}
             commandA={item.homeTeam.name}
             commandB={item.awayTeam.name}
-            status={getStatus(item.status)}
+            status={item.status}
             resultGoals={resultStatGoalsArr[index]}
           />
         ))}

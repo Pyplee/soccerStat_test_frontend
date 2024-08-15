@@ -2,6 +2,7 @@ import React from 'react';
 import { Input } from '@chakra-ui/react';
 import { Box, Flex, Text } from '@chakra-ui/react';
 import '../global.css';
+import { useTranslation } from 'react-i18next';
 
 type DateRangeProps = {
   setDateStart: (value: string) => void;
@@ -63,10 +64,12 @@ export default function DateSelect({
     setDateEnd(newEndDate);
   };
 
+  const { t } = useTranslation();
+
   return (
     <Flex align="center" justify="start" p={2}>
       <Text as="samp" size="xl" fontSize="xl" p={2}>
-        с
+        {t('info.dates.from')}
       </Text>
       <Box>
         <Input
@@ -81,7 +84,7 @@ export default function DateSelect({
         />
       </Box>
       <Text as="samp" size="xl" fontSize="xl" p={2}>
-        по
+        {t('info.dates.to')}
       </Text>
       <Box>
         <Input

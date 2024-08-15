@@ -8,11 +8,13 @@ import Pagination from '../components/Pagination';
 import { getTotalPages, paginate } from '../scripts/pagination';
 import { useGetCommands } from '../hooks';
 import { ICommand } from '../interfaces/ICommand';
+import { useTranslation } from 'react-i18next';
 
 export default function CommandsComponent() {
   const [searchCard, setSearchCard] = React.useState('');
   const [currentPage, setCurrentPage] = React.useState(1);
   const { data, loading, error } = useGetCommands();
+  const { t } = useTranslation();
 
   const commands = data;
 
@@ -46,7 +48,7 @@ export default function CommandsComponent() {
         <InputSearch searchChange={inputSearchChange} />
         <Flex align="center" justify="center" p={10}>
           <Text color={'gray.500'} as="h2" size="xl" mt={6} mb={2}>
-            По вашему запросу ничего не найдено. Попробуйте изменить запрос.
+            {t('error.filterNotFound')}
           </Text>
         </Flex>
       </Box>
