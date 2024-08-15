@@ -41,7 +41,7 @@
         },
         "429": {
           "title": "429 Too Many Requests",
-          "message": "You have exceeded your API request quota. Try reloading the page after a few seconds."
+          "message": "You have exceeded your API request quota. Try reloading the page after 10 seconds."
         },
         "403": {
           "title": "403 Restricted Resource",
@@ -98,7 +98,7 @@
           },
           "429": {
               "title": "429 Слишком много запросов",
-              "message": "Вы превысили квоту запросов к API. Попробуйте обновить страницу через несколько секунд."
+              "message": "Вы превысили квоту запросов к API. Попробуйте обновить страницу через 10 секунд."
           },
           "403": {
               "title": "403 Ограниченный доступ",
