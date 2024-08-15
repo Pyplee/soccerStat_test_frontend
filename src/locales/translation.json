@@ -1,0 +1,116 @@
+{
+  "en": {
+    "translation": {
+      "navbar": {
+        "competitions": "Leagues",
+        "сommands": "Teams",
+        "ru": "Русский",
+        "en": "English"
+      },
+      "input": {
+        "placeholder": "Search..."
+      },
+      "info": {
+        "breadcrumbs": {
+          "leagues": "Leagues",
+          "teams": "Teams"
+        },
+        "dates": {
+          "from": "from",
+          "to": "to"
+        },
+        "statuses": {
+          "SCHEDULED": "Scheduled",
+          "LIVE": "Live",
+          "IN_PLAY": "In Play",
+          "PAUSED": "Paused",
+          "FINISHED": "Finished",
+          "POSTPONED": "Postponed",
+          "SUSPENDED": "Suspended",
+          "CANCELED": "Canceled",
+          "TIMED": "Timed",
+          "unknown": "Unknown",
+          "noResult": "No result"
+        },
+        "title": "Matches"
+      },
+      "error": {
+        "unknownError": {
+          "title": "Unknown error",
+          "message": "Ooops! Something went wrong"
+        },
+        "429": {
+          "title": "429 Too Many Requests",
+          "message": "You have exceeded your API request quota. Try reloading the page after 10 seconds."
+        },
+        "403": {
+          "title": "403 Restricted Resource",
+          "message": "You tried to access a resource that exists, but is not available to you. Check api token."
+        },
+        "404": {
+            "title": "Page Not Found",
+            "message": "The page you&apos;re looking for does not seem to exist",
+            "btnComeBack": "Go to Home"
+          },
+        "filterNotFound": "Nothing was found for your query. Try changing your query."
+      }
+    }
+  },
+  "ru": {
+    "translation": {
+      "navbar": {
+        "competitions": "Лиги",
+        "сommands": "Команды",
+        "ru": "Русский",
+        "en": "English"
+      },
+      "input": {
+        "placeholder": "Поиск..."
+      },
+      "info": {
+        "breadcrumbs": {
+          "leagues": "Лиги",
+          "teams": "Команды"
+        },
+        "dates": {
+          "from": "с",
+          "to": "по"
+        },
+        "statuses": {
+          "SCHEDULED": "Запланирован",
+          "LIVE": "В эфире",
+          "IN_PLAY": "В игре",
+          "PAUSED": "Пауза",
+          "FINISHED": "Завершен",
+          "POSTPONED": "Отложен",
+          "SUSPENDED": "Приостановлен",
+          "CANCELED": "Отменен",
+          "TIMED": "Запланирован",
+          "unknown": "Неизвестно",
+          "noResult": "Нет результата"
+        },
+        "title": "Матчи"
+      },
+      "error": {
+          "unknownError": {
+              "title": "Неизвестная ошибка",
+              "message": "Упсcccc! Что-то пошло не так"
+          },
+          "429": {
+              "title": "429 Слишком много запросов",
+              "message": "Вы превысили квоту запросов к API. Попробуйте обновить страницу через 10 секунд."
+          },
+          "403": {
+              "title": "403 Ограниченный доступ",
+              "message": "Вы попытались получить доступ к ресурсу, который существует, но недоступен. Проверьте API токен."
+          },
+          "404": {
+            "title": "Страница не найдена",
+            "message": "Страница, которую вы ищете, похоже, не существует",
+            "btnComeBack": "Домой"
+          },
+          "filterNotFound": "По вашему запросу ничего не найдено. Попробуйте изменить запрос."
+      }
+    }
+  }
+}
