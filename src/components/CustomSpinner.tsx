@@ -3,6 +3,7 @@ import { Spinner, Flex } from '@chakra-ui/react';
 export default function CustomSpinner() {
   return (
     <Flex
+      pt="30vh"
       align="center"
       justify="center"
       w="100%"
