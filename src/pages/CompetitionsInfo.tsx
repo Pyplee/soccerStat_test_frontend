@@ -1,6 +1,5 @@
 import React, { Suspense } from 'react';
 import { Box, Flex, Text } from '@chakra-ui/react';
-import CustomSpinner from '../components/CustomSpinner';
 import ErrorBlock from '../components/ErrorBlock';
 import Pagination from '../components/Pagination';
 import { getTotalPages, paginate } from '../scripts/pagination';
@@ -12,6 +11,7 @@ import getResultStatGoals from '../scripts/getResultStatGoals';
 import { useGetMatchesCompetitionWithDate } from '../hooks';
 import { IMatch } from '../interfaces/IMatch';
 import { useTranslation } from 'react-i18next';
+import { SkeletonInfo } from '../components/skeletons/indexInfo';
 
 function CompetitionsInfoComponent() {
   const [dateStart, setDateStart] = React.useState<string>('');
@@ -40,7 +40,7 @@ function CompetitionsInfoComponent() {
   }
 
   if (loading) {
-    return <CustomSpinner />;
+    return <SkeletonInfo />;
   }
 
   const arrProps = [

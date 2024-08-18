@@ -2,13 +2,13 @@ import Card from '../components/Card';
 import React from 'react';
 import { Grid, Box, Flex, Text } from '@chakra-ui/react';
 import InputSearch from '../components/InputSearch';
-import CustomSpinner from '../components/CustomSpinner';
 import ErrorBlock from '../components/ErrorBlock';
 import Pagination from '../components/Pagination';
 import { getTotalPages, paginate } from '../scripts/pagination';
 import { useGetCommands } from '../hooks';
 import { ICommand } from '../interfaces/ICommand';
 import { useTranslation } from 'react-i18next';
+import { SkeletonCompAndComm } from '../components/skeletons/indexCompAndComm';
 
 export default function CommandsComponent() {
   const [searchCard, setSearchCard] = React.useState('');
@@ -23,7 +23,7 @@ export default function CommandsComponent() {
   }
 
   if (loading) {
-    return <CustomSpinner />;
+    return <SkeletonCompAndComm />;
   }
 
   function filterItems(array: ICommand[], value: string): ICommand[] {
