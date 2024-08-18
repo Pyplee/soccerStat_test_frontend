@@ -2,13 +2,13 @@ import Card from '../components/Card';
 import React from 'react';
 import { Grid, Box, Flex, Text } from '@chakra-ui/react';
 import InputSearch from '../components/InputSearch';
-import CustomSpinner from '../components/CustomSpinner';
 import ErrorBlock from '../components/ErrorBlock';
 import Pagination from '../components/Pagination';
 import { getTotalPages, paginate } from '../scripts/pagination';
 import { useGetCompetitions } from '../hooks';
 import { ICompetition } from '../interfaces/ICompetition';
 import { useTranslation } from 'react-i18next';
+import { SkeletonCompAndComm } from '../components/skeletons/indexCompAndComm';
 
 export default function CompetitionsComponent() {
   const [searchCard, setSearchCard] = React.useState('');
@@ -22,7 +22,7 @@ export default function CompetitionsComponent() {
   }
 
   if (loading) {
-    return <CustomSpinner />;
+    return <SkeletonCompAndComm />;
   }
 
   function getFilteredItems(

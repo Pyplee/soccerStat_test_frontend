@@ -4,6 +4,8 @@ import { ICompetition } from '../interfaces/ICompetition';
 
 const itemsPerPage = 10;
 
+const getCountItemsPerPage = () => itemsPerPage;
+
 const getTotalPages = (
   filteredArr: IMatch[] | ICommand[] | ICompetition[],
 ): number => {
@@ -15,4 +17,4 @@ const paginate = <T>(array: T[], pageNumber: number): T[] => {
   return array.slice(start, start + itemsPerPage);
 };
 
-export { getTotalPages, paginate };
+export { getTotalPages, paginate, getCountItemsPerPage };
