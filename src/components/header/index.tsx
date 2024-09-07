@@ -1,34 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   Box,
   Flex,
-  Image,
   HStack,
   IconButton,
-  Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
   useDisclosure,
   useColorModeValue,
   Stack,
   Link,
   Badge,
-  useColorMode,
 } from '@chakra-ui/react';
+import ButtonChangeTheme from './ButtonChangeTheme';
+import MenuChangeLanguage from './MenuChangeLanguage';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { INavItem } from '../../interfaces/INavItem';
 import getColorActivePage from './getColorsActivePage';
-import { MoonIcon, SunIcon } from '@chakra-ui/icons';
-import { HiMiniLanguage } from 'react-icons/hi2';
 import { NavLink } from './NavLink';
 import Logo from './Logo';
 import { useTranslation } from 'react-i18next';
 
 export default function WithAction() {
-  const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const location = useLocation();
   const pathname = location.pathname;
@@ -36,8 +28,7 @@ export default function WithAction() {
   const linkColor = useColorModeValue('gray.600', 'gray.200');
   const linkHoverColor = useColorModeValue('gray.800', 'white');
 
-  const { t, i18n } = useTranslation();
-  const [lang, setLang] = useState(i18n.language);
+  const { t } = useTranslation();
 
   const NAV_ITEMS: Array<INavItem> = [
     {
@@ -51,16 +42,6 @@ export default function WithAction() {
       id: 'commands',
     },
   ];
-
-  useEffect(() => {
-    setLang(i18n.language);
-  }, [i18n.language]);
-
-  function handleLngChange(newLang: string) {
-    if (newLang !== lang) {
-      i18n.changeLanguage(newLang);
-    }
-  }
 
   return (
     <>
@@ -113,32 +94,8 @@ export default function WithAction() {
             </HStack>
           </HStack>
           <Flex alignItems={'center'}>
-            <Button onClick={toggleColorMode} variant="ghost">
-              {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-            </Button>
-            <Menu>
-              <MenuButton
-                as={Button}
-                rounded={'full'}
-                variant={'link'}
-                cursor={'pointer'}
-                minW={0}
-                pl={4}
-                borderColor="none"
-                leftIcon={<HiMiniLanguage />}
-                aria-label="Language"
-              ></MenuButton>
-              <MenuList>
-                <MenuItem onClick={() => handleLngChange('en')}>
-                  English
-                  <Image src="/en-flag.svg" boxSize={7} pl={1} />
-                </MenuItem>
-                <MenuItem onClick={() => handleLngChange('ru')}>
-                  Русский
-                  <Image src="/ru-flag.svg" boxSize={7} pl={1} />
-                </MenuItem>
-              </MenuList>
-            </Menu>
+            <ButtonChangeTheme />
+            <MenuChangeLanguage />
           </Flex>
         </Flex>
 
